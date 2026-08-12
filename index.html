@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WHITE DEVIL — Cyber Security & Ethical Hacking Course</title>
+<meta name="description" content="WHITE DEVIL: Cyber Security & Ethical Hacking Master Course. 12 modules, 20 topics, guided practice resources, certification. Designed by Santosh Chhetri.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' https://ipapi.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://ipapi.co;">
+<style>
+:root{
+ --bg:#000; --text:#ffffff; --accent-text:#ffffff;
+ --fg:#00ff41; --fg-dim:rgba(0,255,65,.85); --fg-weak:rgba(0,255,65,.45);
+ --muted:rgba(0,255,65,.62); --card-bg:rgba(0,15,0,.8); --border:rgba(0,255,65,.35);
+ --header-bg:rgba(0,0,0,.92); --input-bg:#001500; --hover-bg:rgba(0,255,65,.12);
+ --glow:rgba(0,255,65,.45); --danger:#ff4444; --gold:#ffd700;
+}
+html[data-theme="light"]{
+ --bg:#f2f7f2; --text:#0b0f0b; --accent-text:#0b0f0b;
+ --fg:#007a35; --fg-dim:rgba(0,107,44,.9); --fg-weak:rgba(0,107,44,.45);
+ --muted:rgba(0,107,44,.68); --card-bg:rgba(255,255,255,.94); --border:rgba(0,107,44,.32);
+ --header-bg:rgba(255,255,255,.94); --input-bg:#ffffff; --hover-bg:rgba(0,107,44,.08);
+ --glow:rgba(0,107,44,.25); --danger:#d63031; --gold:#b8860b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{font-family:'Courier New',monospace,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;min-height:100vh;line-height:1.6;transition:background .4s,color .4s}
+a{color:var(--fg);text-decoration:none;transition:.3s}
+/* ---------- SPLASH ---------- */
+#splash{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;text-align:center;transition:opacity .7s}
+.splash-inner{max-width:600px;padding:30px}
+#splashLogo{width:96px;height:96px;margin:0 auto 18px;display:block;border-radius:50%;border:2px solid #00ff41;box-shadow:0 0 30px rgba(0,255,65,.6),0 0 80px rgba(0,255,65,.25);object-fit:cover;animation:pulse 1.5s infinite}
+.splash-title{font-size:1.4rem;color:#fff;margin:0 0 10px;text-shadow:0 0 10px #00ff4188}
+.splash-sub{font-size:.95rem;color:#00ff4188;margin-bottom:30px}
+.splash-progress{width:100%;height:4px;background:#003300;border-radius:4px;overflow:hidden;box-shadow:0 0 10px #00ff4144}
+.splash-bar{height:100%;width:0%;background:linear-gradient(90deg,#00ff41,#fff);border-radius:4px;box-shadow:0 0 15px #00ff41}
+.splash-pct{margin-top:12px;font-size:1.3rem;color:#00ff41;text-shadow:0 0 10px #00ff41}
+.splash-by{margin-top:25px;font-size:.85rem;color:#00ff4199;letter-spacing:2px}
+.splash-blink{margin-top:15px;font-size:.8rem;color:#00ff41;animation:blink 1s steps(2) infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes blink{50%{opacity:.2}}
+body.splash-lock{overflow:hidden}
+/* ---------- HEADER ---------- */
+header{position:fixed;top:0;left:0;width:100%;z-index:1000;background:var(--header-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 15px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-size:1.35rem;font-weight:900;color:var(--fg);text-shadow:0 0 12px var(--glow);letter-spacing:2px;display:flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap}
+nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+nav a{color:var(--muted);font-size:.8rem;padding:6px 9px;border-radius:6px;transition:.3s;font-weight:500;cursor:pointer}
+nav a:hover{color:var(--text);background:var(--hover-bg)}
+.icon-btn{background:none;border:1px solid var(--border);color:var(--fg);border-radius:6px;padding:6px 9px;font-size:.9rem;cursor:pointer;transition:.3s}
+.icon-btn:hover{background:var(--hover-bg);box-shadow:0 0 10px var(--glow)}
+#themeSel{background:var(--input-bg);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:6px 7px;font-size:.75rem;cursor:pointer;outline:none}
+.auth-btn{padding:7px 14px;border:1px solid var(--fg);background:transparent;color:var(--fg);border-radius:6px;font-weight:700;font-size:.78rem;cursor:pointer;transition:.3s;text-transform:uppercase;white-space:nowrap}
+.auth-btn:hover{background:var(--fg);color:#000}
+.user-chip{position:relative;display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--fg);cursor:pointer;white-space:nowrap}
+.user-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--fg);object-fit:cover;background:var(--input-bg)}
+.user-chip .dd{position:absolute;top:42px;right:0;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;min-width:190px;display:none;z-index:200;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.user-chip .dd.open{display:block}
+.user-chip .dd a,.user-chip .dd button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:10px 14px;background:none;border:none;color:var(--fg);font-size:.82rem;cursor:pointer;font-family:inherit}
+.user-chip .dd a:hover,.user-chip .dd button:hover{background:var(--hover-bg)}
+.user-chip .dd .del{color:var(--danger)}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;background:none;border:none;padding:5px}
+.hamburger span{width:26px;height:2px;background:var(--fg);border-radius:2px}
+@media(max-width:1024px){.hamburger{display:flex}#navLinks{display:none;position:fixed;top:72px;left:0;right:0;background:var(--header-bg);flex-direction:column;padding:15px;border-bottom:1px solid var(--border);z-index:999}#navLinks.open{display:flex}}
+/* ---------- HERO ---------- */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px 60px}
+.hero .badge{font-size:.8rem;color:var(--fg);border:1px solid var(--border);padding:6px 16px;border-radius:30px;margin-bottom:20px;letter-spacing:3px;text-shadow:0 0 10px var(--glow)}
+.hero h1{font-size:clamp(1.8rem,5vw,3.6rem);font-weight:900;color:var(--accent-text);text-shadow:0 0 20px var(--glow),0 0 80px var(--glow);margin-bottom:20px}
+.hero p{font-size:clamp(.95rem,2vw,1.25rem);color:var(--muted);max-width:760px;margin-bottom:30px}
+.cta-btns{display:flex;gap:15px;flex-wrap:wrap;justify-content:center}
+.cta-btns a,.cta-btns button{padding:14px 35px;border-radius:4px;font-weight:700;font-size:1rem;transition:.4s;border:2px solid var(--fg);text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-family:inherit;background:transparent;color:var(--fg)}
+.cta-btns .primary{background:var(--fg);color:#000;box-shadow:0 0 25px var(--glow)}
+.cta-btns .primary:hover{background:transparent;color:var(--fg)}
+.cta-btns .secondary:hover{background:var(--fg);color:#000}
+.stats-bar{display:flex;gap:40px;margin-top:50px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center}
+.stat .num{font-size:2rem;font-weight:800;color:var(--accent-text);text-shadow:0 0 15px var(--glow)}
+.stat .label{font-size:.8rem;color:var(--muted)}
+/* ---------- SECTIONS ---------- */
+.section{padding:80px 20px;position:relative;z-index:1}
+.section-title{text-align:center;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:800;margin-bottom:10px;color:var(--accent-text);text-shadow:0 0 15px var(--glow)}
+.section-sub{text-align:center;color:var(--muted);margin-bottom:40px;font-size:1rem}
+.container{max-width:1300px;margin:0 auto;padding:0 15px}
+/* ---------- CARDS ---------- */
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.course-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:24px;transition:.35s;display:flex;flex-direction:column;gap:12px;position:relative;backdrop-filter:blur(6px)}
+.course-card:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--glow)}
+.num-badge{position:absolute;top:14px;right:14px;font-size:.68rem;color:var(--muted);border:1px solid var(--border);padding:3px 9px;border-radius:20px}
+.course-card .icon{font-size:2.4rem;text-align:center;text-shadow:0 0 15px var(--glow)}
+.course-card h3{font-size:1.05rem;color:var(--accent-text);text-align:center}
+.course-card p{font-size:.82rem;color:var(--muted);text-align:center}
+.course-card details summary{cursor:pointer;font-size:.8rem;color:var(--fg);background:var(--hover-bg);padding:8px 12px;border-radius:8px;list-style:none;text-align:center}
+.course-card details ul{margin:8px 0 0 18px;font-size:.78rem;color:var(--muted)}
+.course-card details li{margin:3px 0}
+.price{font-size:1.5rem;font-weight:800;color:var(--fg);text-align:center;text-shadow:0 0 12px var(--glow)}
+.btn-buy{width:100%;padding:13px;border:1px solid var(--fg);background:var(--fg);color:#000;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer;transition:.3s;font-family:inherit}
+.btn-buy:hover{background:transparent;color:var(--fg);box-shadow:0 0 20px var(--glow)}
+.btn-buy.gold{background:var(--gold);border-color:var(--gold);color:#000}
+.btn-buy.gold:hover{background:transparent;color:var(--gold)}
+/* ---------- INFO / CAREER / FAQ / OFFER / PACKAGE / DISCLAIMER ---------- */
+.info-box{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:860px;margin:0 auto}
+.info-box h3{color:var(--accent-text);font-size:1.1rem;margin-bottom:16px;text-align:center}
+.info-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.info-list li{padding:11px 13px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;font-size:.84rem;color:var(--text)}
+.info-list li::before{content:'▸ ';color:var(--fg)}
+.pkg-box{background:linear-gradient(160deg,var(--card-bg),var(--input-bg));border:2px solid var(--fg);border-radius:18px;padding:38px 25px;max-width:720px;margin:0 auto;text-align:center;box-shadow:0 0 40px var(--glow)}
+.pkg-tag{display:inline-block;background:var(--fg);color:#000;font-weight:800;padding:6px 18px;border-radius:30px;font-size:.76rem;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.pkg-price{font-size:3rem;font-weight:900;color:var(--fg);text-shadow:0 0 20px var(--glow)}
+.strike{text-decoration:line-through;color:var(--muted);font-size:1.3rem;font-weight:400}
+.pkg-list{list-style:none;text-align:left;margin:24px auto;max-width:440px}
+.pkg-list li{padding:8px 0;font-size:.9rem;color:var(--text);border-bottom:1px dashed var(--border)}
+.pkg-list li::before{content:'✅ '}
+.offer-box{background:radial-gradient(ellipse at center,var(--card-bg),#000 72%);border:1px solid var(--gold);border-radius:18px;padding:44px 25px;max-width:780px;margin:0 auto;text-align:center;box-shadow:0 0 50px rgba(255,215,0,.12)}
+.offer-box h3{color:var(--gold);font-size:1.4rem;margin-bottom:10px}
+.offer-box p{color:var(--muted);font-size:.92rem;margin:7px 0;line-height:1.7}
+.faq-box{max-width:780px;margin:0 auto}
+.faq-item{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.faq-item summary{cursor:pointer;padding:16px 20px;font-weight:700;color:var(--accent-text);font-size:.92rem;list-style:none}
+.faq-item summary::before{content:'❓ ';color:var(--fg)}
+.faq-item .fa{padding:0 20px 16px;color:var(--muted);font-size:.86rem;line-height:1.7}
+.disclaimer{background:var(--card-bg);border:1px solid var(--danger);border-radius:14px;padding:26px;max-width:860px;margin:0 auto}
+.disclaimer h3{color:var(--danger);font-size:1rem;margin-bottom:10px}
+.disclaimer p,.disclaimer li{font-size:.82rem;color:var(--muted);line-height:1.8}
+.disclaimer ul{margin:8px 0 0 18px}
+/* ---------- RESOURCES ---------- */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.res-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:.3s}
+.res-card:hover{box-shadow:0 0 20px var(--glow)}
+.res-card h4{color:var(--accent-text);font-size:.95rem}
+.res-card p{font-size:.78rem;color:var(--muted)}
+.res-btn{padding:9px;border:1px solid var(--fg);background:transparent;color:var(--fg);border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:700;font-family:inherit;transition:.3s}
+.res-btn:hover{background:var(--fg);color:#000}
+/* ---------- FEEDBACK ---------- */
+.fb-box{max-width:600px;margin:0 auto;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:30px}
+.stars{display:flex;gap:8px;justify-content:center;font-size:2rem;cursor:pointer;margin-bottom:18px}
+.stars span{color:var(--fg-weak);transition:.2s}
+.stars span.on{color:var(--gold);text-shadow:0 0 12px var(--gold)}
+.fb-box input,.fb-box select,.fb-box textarea{width:100%;padding:12px;margin-bottom:12px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;outline:none}
+.fb-box textarea{min-height:100px;resize:vertical}
+/* ---------- MR ROBOT ---------- */
+.robot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.robot-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;transition:.35s}
+.robot-card:hover{transform:translateY(-5px);box-shadow:0 0 25px var(--glow)}
+.robot-card .poster{font-size:3rem;margin-bottom:10px}
+.robot-card h3{color:var(--accent-text);font-size:1rem;margin-bottom:4px}
+.season-label{font-size:.75rem;color:var(--muted);margin-bottom:10px}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-robot{flex:1;padding:10px;border:1px solid var(--fg);background:transparent;color:var(--fg);border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:700;font-family:inherit;transition:.3s}
+.btn-robot:hover{background:var(--fg);color:#000}
+.btn-watch{background:var(--fg);color:#000}
+.btn-dl{border-color:var(--gold);color:var(--gold)}
+.btn-dl:hover{background:var(--gold);color:#000}
+/* ---------- CERT ---------- */
+.cert-box{max-width:820px;margin:0 auto;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:30px}
+.cert-progress{width:100%;height:16px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:18px 0}
+.cert-fill{height:100%;width:0%;background:linear-gradient(90deg,#00ff41,var(--gold));border-radius:10px;transition:.6s;box-shadow:0 0 12px var(--glow)}
+.cert-modules{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:18px 0}
+.cert-module{display:flex;align-items:center;gap:10px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:.8rem;color:var(--muted);cursor:default}
+.cert-module.available{color:var(--fg);cursor:pointer;border-color:var(--fg)}
+.cert-module.available:hover{background:var(--hover-bg)}
+.cert-module.completed{color:var(--gold);border-color:var(--gold)}
+.status-icon{font-weight:900;font-size:1rem}
+#certBtn{width:100%;padding:15px;background:var(--fg);color:#000;border:none;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:.3s}
+#certBtn:disabled{background:var(--fg-weak);color:#000;cursor:not-allowed;opacity:.6}
+.cert-paper{display:none;margin-top:25px;background:linear-gradient(135deg,#0a1f0a,#002a10);border:3px double #00ff41;border-radius:8px;padding:35px;text-align:center;color:#00ff41;position:relative}
+.cert-paper.active{display:block;animation:certIn .8s}
+@keyframes certIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.cert-paper .wd{font-size:1.8rem;font-weight:900;letter-spacing:4px;text-shadow:0 0 15px #00ff41}
+.cert-paper h2{font-size:1.1rem;margin:10px 0;color:#fff;font-weight:600}
+.cert-paper .cname{font-size:1.5rem;font-weight:900;color:#fff;margin:14px 0;text-shadow:0 0 10px #00ff41}
+.cert-paper .cid{font-size:.85rem;color:#00ff4188;margin:8px 0}
+.cert-paper .cbody{font-size:.85rem;color:#00ff41;margin:14px 0;line-height:1.7}
+.dl-cert{margin-top:16px;padding:12px 30px;background:#00ff41;color:#000;border:none;border-radius:8px;font-weight:800;cursor:pointer;font-family:inherit}
+/* ---------- MODALS ---------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(6px)}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:30px;position:relative;box-shadow:0 0 40px var(--glow);animation:modalIn .3s}
+.modal-box.wide{max-width:760px}
+@keyframes modalIn{from{transform:translateY(25px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:12px;right:14px;background:none;border:1px solid var(--border);color:var(--fg);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem}
+.modal-title{font-size:1.3rem;font-weight:800;color:var(--accent-text);text-align:center;margin-bottom:20px;text-shadow:0 0 10px var(--glow)}
+/* ---------- AUTH PROVIDERS / PASSWORD ---------- */
+.password-strength{font-size:.75rem;margin:6px 0 12px}
+.oauth-note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:10px}
+/* AUTH */
+.tabs{display:flex;margin-bottom:22px;border-bottom:1px solid var(--border)}
+.tab{flex:1;text-align:center;padding:11px;cursor:pointer;color:var(--muted);font-weight:700;font-size:.85rem;border-bottom:2px solid transparent;transition:.3s}
+.tab.active{color:var(--fg);border-bottom-color:var(--fg)}
+.f-input{width:100%;padding:13px;margin-bottom:12px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.88rem;outline:none}
+.f-input:focus{border-color:var(--fg);box-shadow:0 0 10px var(--glow)}
+.cc-row{display:flex;gap:8px;margin-bottom:12px}
+.cc-sel{width:46%;padding:13px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.8rem;outline:none;flex-shrink:0}
+.cc-sel option{background:#000;color:#00ff41}
+html[data-theme="light"] .cc-sel option{background:#fff;color:#0b0f0b}
+.f-btn{width:100%;padding:13px;background:var(--fg);color:#000;border:none;border-radius:8px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit;transition:.3s}
+.f-btn:hover{box-shadow:0 0 18px var(--glow)}
+.f-btn.ghost{background:transparent;border:1px solid var(--fg);color:var(--fg)}
+.or-div{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:.75rem}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border)}
+.social-row{display:flex;gap:10px}
+.social-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:700;font-family:inherit;transition:.3s}
+.social-btn:hover{border-color:var(--fg);box-shadow:0 0 14px var(--glow)}
+.social-btn .g{color:#ea4335;font-weight:900}.social-btn .a{color:#a2aaad;font-weight:900}.social-btn .gh{color:#f0f6fc;font-weight:900}
+html[data-theme="light"] .social-btn .gh{color:#24292f}
+.auth-note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
+/* OTP */
+.otp-code-box{margin:14px 0;padding:16px;border:1px dashed var(--gold);border-radius:10px;text-align:center;color:var(--gold);font-size:1.5rem;font-weight:900;letter-spacing:6px;background:var(--input-bg)}
+/* PROFILE */
+.profile-banner{width:100%;height:150px;border-radius:12px;background-size:cover;background-position:center;border:1px solid var(--border);position:relative;margin-bottom:45px;background-color:var(--input-bg)}
+.profile-avatar-wrap{position:absolute;bottom:-42px;left:20px;width:94px;height:94px;padding:5px;border-radius:50%;background:var(--card-bg);border:2px solid var(--fg);box-shadow:0 0 22px var(--glow);z-index:3}
+.profile-avatar{width:80px;height:80px;border-radius:50%;border:3px solid var(--fg);object-fit:cover;background:var(--input-bg);box-shadow:0 0 15px var(--glow)}
+.p-upload-btn{position:absolute;bottom:0;right:0;background:var(--fg);color:#000;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:.8rem;line-height:1}
+.p-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.p-tab{flex:1;min-width:110px;text-align:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--muted);font-size:.8rem;font-weight:700;font-family:inherit;background:none;transition:.3s}
+.p-tab.active{color:var(--fg);border-color:var(--fg);background:var(--hover-bg)}
+.panel{display:none}
+.panel.active{display:block}
+.owned-card{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:10px;flex-wrap:wrap}
+.owned-card .nm{font-size:.85rem;color:var(--text);font-weight:700}
+.owned-card .st{font-size:.72rem;color:var(--muted)}
+.cont-btn{padding:8px 16px;background:var(--fg);color:#000;border:none;border-radius:8px;font-weight:800;font-size:.75rem;cursor:pointer;font-family:inherit}
+.set-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.set-row .lbl{font-size:.85rem;color:var(--text);font-weight:700}
+.set-row .sub{font-size:.72rem;color:var(--muted)}
+.switch{position:relative;width:46px;height:24px;background:var(--input-bg);border:1px solid var(--border);border-radius:20px;cursor:pointer;transition:.3s;flex-shrink:0}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:.3s}
+.switch.on{background:var(--fg);border-color:var(--fg)}
+.switch.on::after{left:24px;background:#000}
+/* ---------- PROFILE FULLSCREEN ---------- */
+#profileModal.profile-fullscreen{padding:0}
+#profileModal.profile-fullscreen .modal-box{max-width:none;width:100vw;height:100vh;max-height:100vh;border-radius:0;padding:35px;overflow-y:auto}
+#profileModal.profile-fullscreen .profile-banner{height:260px}
+#profileModal.profile-fullscreen .profile-avatar-wrap{width:140px;height:140px;bottom:-70px}
+#profileModal.profile-fullscreen .profile-avatar{width:124px;height:124px}
+/* VIDEO */
+.video-box{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:900px;width:100%;padding:16px}
+.video-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.video-head h3{font-size:1rem;color:var(--accent-text)}
+.video-wrapper{position:relative;padding-top:56.25%;background:#000;border-radius:10px;overflow:hidden}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.sub-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.sub-row select{background:var(--input-bg);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:7px;font-size:.78rem}
+.watch-status{font-size:.82rem;color:var(--fg);margin-top:10px}
+.watch-status.done{color:var(--gold)}
+/* ---------- CHATBOT ---------- */
+.checkout-modal{max-width:900px!important}.checkout-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:22px;align-items:start}.checkout-label{font-weight:800;color:var(--accent-text);margin:0 0 7px}.tax-note{font-size:.72rem;color:var(--muted);margin:8px 0 14px}.checkout-notice{background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:15px;margin:12px 0 18px}.checkout-notice b{color:var(--fg);display:block;margin-bottom:7px}.checkout-notice p{font-size:.78rem;color:var(--muted);line-height:1.6}.order-summary{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;position:sticky;top:10px}.order-summary h3{color:var(--accent-text);margin-bottom:18px}.summary-line,.summary-total{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:.85rem}.summary-line span{color:var(--muted)}.summary-total{border-bottom:0;font-size:1rem;padding-top:18px}.summary-total strong{color:var(--fg);font-size:1.2rem}.terms-check{display:flex;gap:9px;align-items:flex-start;margin-top:18px;font-size:.76rem;color:var(--muted);line-height:1.5}.terms-check input{margin-top:3px;accent-color:var(--fg)}.terms-check a{color:var(--fg);text-decoration:underline}@media(max-width:700px){.checkout-grid{grid-template-columns:1fr}.order-summary{position:static}.checkout-modal{width:calc(100vw - 24px)!important;max-height:90vh;overflow:auto}}
+.chat-fab{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;background:var(--fg);color:#000;border:none;font-size:1.6rem;cursor:pointer;z-index:1500;box-shadow:0 0 25px var(--glow);transition:.3s;font-family:inherit}
+.chat-fab:hover{transform:scale(1.1)}
+.chat-panel{position:fixed;bottom:95px;right:24px;width:340px;max-width:calc(100vw - 30px);height:460px;max-height:calc(100vh - 130px);background:var(--card-bg);border:1px solid var(--border);border-radius:16px;display:none;flex-direction:column;z-index:1500;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.6)}
+.chat-panel.active{display:flex}
+.chat-head{padding:14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.chat-head b{color:var(--fg);font-size:.9rem}
+.chat-close{background:none;border:none;color:var(--fg);font-size:1.2rem;cursor:pointer}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:10px 13px;border-radius:12px;font-size:.8rem;line-height:1.5}
+.msg.user{align-self:flex-end;background:var(--fg);color:#000;border-bottom-right-radius:3px}
+.msg.bot{align-self:flex-start;background:var(--input-bg);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:3px}
+.chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1;padding:11px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.8rem;outline:none}
+.chat-input-row button{background:var(--fg);color:#000;border:none;border-radius:8px;padding:0 16px;font-weight:800;cursor:pointer;font-family:inherit}
+
+/* ---------- CHAT FULLSCREEN ---------- */
+.chat-head-actions{display:flex;align-items:center;gap:4px}
+.chat-full,.chat-close{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;color:var(--fg);cursor:pointer;border-radius:7px;font-size:1rem}
+.chat-full:hover,.chat-close:hover{background:var(--hover-bg)}
+.chat-panel.chat-fullscreen{left:0;right:0;top:0;bottom:0;width:100vw;max-width:none;height:100vh;max-height:none;border-radius:0;border-width:0;z-index:5000}
+.chat-panel.chat-fullscreen .chat-msgs{padding:24px;max-width:1000px;width:100%;margin:0 auto}
+.chat-panel.chat-fullscreen .chat-input-row{max-width:1000px;width:100%;margin:0 auto;padding:18px}
+.chat-panel.chat-fullscreen .chat-head{padding:18px 24px}
+.chat-typing{display:none;align-items:center;gap:5px;padding:0 14px 10px;color:var(--muted);font-size:.7rem}
+.chat-typing.active{display:flex}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--fg);animation:chatDot 1s infinite ease-in-out}
+.chat-typing span:nth-child(2){animation-delay:.15s}.chat-typing span:nth-child(3){animation-delay:.3s}
+.chat-typing em{font-style:normal;margin-left:3px}
+@keyframes chatDot{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+/* ---------- TOAST ---------- */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--card-bg);border:1px solid var(--fg);color:var(--fg);padding:13px 24px;border-radius:10px;z-index:3000;transition:.4s;font-size:.85rem;box-shadow:0 0 20px var(--glow);max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.err{border-color:var(--danger);color:var(--danger);box-shadow:0 0 20px var(--danger)}
+/* ---------- CONTACT ---------- */
+.contact-wrap{max-width:900px;margin:0 auto}
+.contact-box{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 0 25px rgba(0,255,65,.08)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.contact-field{display:flex;flex-direction:column;gap:6px}
+.contact-field.full{grid-column:1/-1}
+.contact-field label{font-size:.78rem;color:var(--muted)}
+.contact-field input,.contact-field textarea,.contact-field select{width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-family:inherit;font-size:.85rem;outline:none}
+.contact-field input:focus,.contact-field textarea:focus,.contact-field select:focus{border-color:var(--fg);box-shadow:0 0 10px var(--glow)}
+.contact-field textarea{min-height:140px;resize:vertical}
+.contact-actions{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.contact-note{text-align:center;color:var(--muted);font-size:.75rem;margin-top:12px}
+@media(max-width:700px){.contact-grid{grid-template-columns:1fr}.contact-field.full{grid-column:auto}.chat-panel{right:10px;bottom:85px;width:calc(100vw - 20px)}#profileModal.profile-fullscreen .modal-box{padding:15px}#profileModal.profile-fullscreen .profile-banner{height:190px}}
+
+.site-footer{position:relative;z-index:1;background:#0b0b0b;color:#f5f5f5;border-top:1px solid #222;padding:54px 6% 28px;text-align:left}
+.site-footer .f-logo{font-size:2rem;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:5px}
+.footer-brand{max-width:1000px;margin:0 auto 38px;text-align:left}
+.footer-brand .footer-tagline{color:#ff1717;font-size:.9rem;font-weight:800;letter-spacing:1.5px;margin-bottom:14px;text-transform:uppercase}
+.footer-brand p{max-width:850px;color:#d4d4d4;font-size:.9rem;line-height:1.7;margin:0}
+.footer-socials{display:flex;gap:12px;margin-top:20px}
+.footer-socials a{width:46px;height:46px;border-radius:50%;background:#ff1010;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;font-weight:900;transition:.2s}
+.footer-socials a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,16,16,.25)}
+.footer-columns{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:34px}
+.footer-col h3{color:#ff1515;font-size:.95rem;letter-spacing:.5px;margin:0 0 18px;font-weight:800}
+.footer-col a{display:block;color:#f0f0f0;text-decoration:none;font-size:.86rem;line-height:1.45;margin:0 0 14px;transition:.2s}
+.footer-col a:hover{color:#ff2929;transform:translateX(2px)}
+.footer-bottom{max-width:1000px;margin:38px auto 0;padding-top:24px;border-top:1px solid #2b2b2b}
+.footer-notice{color:#aaa;font-size:.73rem;line-height:1.6;margin-bottom:12px}
+.site-footer .credit{font-size:.72rem;color:#8e8e8e;letter-spacing:1px}
+@media(max-width:800px){.footer-columns{grid-template-columns:repeat(2,1fr);gap:28px}.site-footer{padding-left:24px;padding-right:24px}}
+@media(max-width:520px){.footer-columns{grid-template-columns:1fr}.site-footer .f-logo{font-size:1.6rem}.footer-socials a{width:42px;height:42px}}
+</style>
+
+
+</head>
+<body class="splash-lock">
+
+<!-- ===== SPLASH ===== -->
+<div id="splash">
+ <div class="splash-inner">
+  <!-- 👇 REPLACE with your own small logo image file -->
+  <img id="splashLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='47' fill='%23000' stroke='%2300ff41' stroke-width='5'/><text x='50' y='66' font-size='50' text-anchor='middle'>😈</text></svg>" alt="WHITE DEVIL logo">
+  <div class="splash-title">Welcome to Master in White Devil…</div>
+  <div class="splash-sub">Loading special courses… please wait a few minutes</div>
+  <div class="splash-progress"><div class="splash-bar" id="splashBar"></div></div>
+  <div class="splash-pct" id="splashPct">0%</div>
+  <div class="splash-by">DESIGNED BY <b style="color:#fff">SANTOSH CHHETRI</b></div>
+  <div class="splash-blink">█ ENTERING CYBER SECURITY ACADEMY █</div>
+ </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header>
+ <div class="logo" onclick="scrollToTop()">⚡ WHITE <span style="color:#fff">DEVIL</span></div>
+ <nav id="navLinks">
+  <a onclick="go('home')">Home</a>
+  <a onclick="go('courses')">Courses</a>
+  <a onclick="go('package')">Training</a>
+  <a onclick="go('career')">Career</a>
+  <a onclick="go('faq')">FAQ</a>
+  <a onclick="go('robot')">Mr. Robot</a>
+  <a onclick="go('cert')">Certificate</a>
+  <a onclick="go('practice')">Practice</a>
+   <a onclick="go('resources')">Resources</a>
+  <a onclick="go('feedback')">Feedback</a>
+  <a onclick="go('ai-assistant')">AI Assistant</a>
+  <a onclick="go('contact')">Contact Us</a>
+ </nav>
+ <div style="display:flex;align-items:center;gap:8px">
+  <button class="icon-btn" id="soundBtn" onclick="Sound.toggle()" title="Sound effects">🔊</button>
+  <select id="themeSel" onchange="setTheme(this.value)" title="Theme">
+   <option value="dark">🌙 Dark</option>
+   <option value="light">☀️ White</option>
+   <option value="system">🖥️ System</option>
+  </select>
+  <div id="authArea"></div>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+ </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+ <div class="badge">⚡ CYBER SECURITY &amp; ETHICAL HACKING</div>
+ <h1 id="hero-title">Cyber Security &amp; Ethical Hacking Master Course</h1>
+ <p id="hero-desc">12 modules · 20 topics · guided practice · external legal labs · job-ready skills · certificate. Designed by Santosh Chhetri for WHITE DEVIL.</p>
+ <div class="cta-btns">
+  <button class="primary" onclick="go('courses')">🚀 Start Learning</button>
+  <button class="secondary" onclick="go('package')">🎁 Enroll Now — ₹500</button>
+ </div>
+ <div class="stats-bar">
+  <div class="stat"><div class="num">12</div><div class="label">Modules</div></div>
+  <div class="stat"><div class="num">20</div><div class="label">Topics</div></div>
+  <div class="stat"><div class="num">20+</div><div class="label">Practice Resources</div></div>
+  <div class="stat"><div class="num">₹500</div><div class="label">Full Course</div></div>
+ </div>
+</section>
+
+<!-- ===== COURSES ===== -->
+<section class="section" id="courses">
+ <div class="container">
+  <h2 class="section-title">📚 12 Course Modules</h2>
+  <p class="section-sub">Buy once — ₹500 — unlock ALL 12 modules + guided practice resources + certificate. No subscription.</p>
+  <div class="course-grid" id="moduleGrid"></div>
+ </div>
+</section>
+
+<!-- ===== WHAT YOU NEED ===== -->
+<section class="section" id="need">
+ <div class="container">
+  <h2 class="section-title">💻 What You Need</h2>
+  <p class="section-sub">You don't need an expensive setup. Recommended:</p>
+  <div class="info-box">
+   <ul class="info-list">
+    <li>Laptop / Desktop</li>
+    <li>8 GB+ RAM recommended</li>
+    <li>Virtualization support (VT-x / AMD-V)</li>
+    <li>Internet connection</li>
+    <li>Linux / Kali Linux virtual machine</li>
+    <li>Windows practice VM where required</li>
+    <li>Basic computer knowledge</li>
+   </ul>
+   <p style="text-align:center;color:var(--muted);font-size:.82rem;margin-top:18px">💡 Students can build their own isolated cybersecurity lab using virtual machines — step-by-step guide included in the course.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===== CAREER PATHS ===== -->
+<section class="section" id="career">
+ <div class="container">
+  <h2 class="section-title">👨‍💻 Career Paths</h2>
+  <p class="section-sub">This course can help you prepare for entry-level roles such as:</p>
+  <div class="info-box">
+   <ul class="info-list">
+    <li>Junior Cybersecurity Analyst</li>
+    <li>SOC Analyst — Entry Level</li>
+    <li>Security Operations Assistant</li>
+    <li>Junior Security Tester</li>
+    <li>Vulnerability Assessment Analyst</li>
+    <li>Junior Penetration Testing Trainee</li>
+    <li>IT Security Support</li>
+    <li>Network Security Trainee</li>
+    <li>Cybersecurity Intern</li>
+    <li>Bug Bounty / Security Researcher</li>
+   </ul>
+   <p style="text-align:center;color:var(--muted);font-size:.78rem;margin-top:18px">⚠️ Career results depend on your skills, experience, portfolio, interviews and the requirements of individual employers.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===== TRAINING PACKAGE ===== -->
+<section class="section" id="package">
+ <div class="container">
+  <h2 class="section-title">🎁 Complete Training Package</h2>
+  <p class="section-sub">Everything you need to start your cybersecurity career — one low price.</p>
+  <div class="pkg-box">
+   <div class="pkg-tag">🔥 Limited-Time Offer</div>
+   <div style="font-size:.95rem;color:var(--muted)">Full Course —</div>
+   <div class="pkg-price">₹500 <span class="strike">₹699</span></div>
+   <p style="font-size:.78rem;color:var(--muted);margin-top:6px">One-time payment · Lifetime access · No subscription</p>
+   <ul class="pkg-list">
+    <li>Full course access — 12 modules, 20 topics</li>
+    <li>Practical cybersecurity labs</li>
+    <li>Hands-on projects</li>
+    <li>Tool demonstrations</li>
+    <li>Downloadable resources</li>
+    <li>Module assignments &amp; practice tasks</li>
+    <li>Final project</li>
+    <li>Certificate of completion</li>
+    <li>Interview preparation</li>
+    <li>Career roadmap</li>
+    <li>Course updates — free forever</li>
+   </ul>
+   <button class="f-btn" style="max-width:340px;margin:0 auto;display:block" onclick="enrollNow()">🎓 ENROLL NOW</button>
+   <p style="font-size:.72rem;color:var(--muted);margin-top:12px">🔐 Sign in / create free account first — then pay securely by card.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===== LIMITED TIME OFFER ===== -->
+<section class="section" id="offer">
+ <div class="container">
+  <div class="offer-box">
+   <h3>🔥 Start Your Cybersecurity Journey Today</h3>
+   <p>Don't wait until you know everything.</p>
+   <p>Start with the fundamentals.</p>
+   <p>Build practical skills.</p>
+   <p>Complete real projects.</p>
+   <p>Build your portfolio.</p>
+   <p>Prepare for cybersecurity opportunities.</p>
+   <p style="font-weight:700;color:var(--text)">Your cybersecurity journey starts with the first lesson.</p>
+   <br>
+   <button class="f-btn" style="max-width:380px;margin:0 auto;display:block;background:var(--gold);border-color:var(--gold)" onclick="enrollNow()">⚡ JOIN THE COURSE NOW</button>
+  </div>
+ </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section" id="faq">
+ <div class="container">
+  <h2 class="section-title">❓ Frequently Asked Questions</h2>
+  <p class="section-sub">Quick answers — more questions? Ask the chatbot 💬</p>
+  <div class="faq-box">
+   <details class="faq-item"><summary>Will I receive a certificate?</summary><div class="fa">✅ Yes! Students who complete the course requirements (all 12 modules — no skipping) receive the WHITE DEVIL certificate with a unique verify ID (WD-XXXX-XXXX). Employers can verify the certificate.</div></details>
+   <details class="faq-item"><summary>Can I learn at my own pace?</summary><div class="fa">✅ Absolutely — <b>Lifetime Access</b>: buy once, learn at your own speed, watch anytime, on any device, and resume exactly where you left off.</div></details>
+   <details class="faq-item"><summary>Do I need an expensive computer?</summary><div class="fa">✅ No. A laptop/desktop with 8 GB+ RAM and virtualization support is enough. The course includes guidance for setting up an isolated practice environment and links to external training labs.</div></details>
+   <details class="faq-item"><summary>Is this course legal / ethical?</summary><div class="fa">🛡️ Yes. All training uses authorized environments only — your own systems, dedicated lab VMs, authorized external training platforms, and bug bounty targets within published program scope. Unauthorized access is not taught or permitted.</div></details>
+   <details class="faq-item"><summary>What payment methods do you accept?</summary><div class="fa">💳 Secure card checkout. Sign in / create a free account first, then pay with your card. Your courses, progress and certificate are saved to your account forever.</div></details>
+  </div>
+ </div>
+</section>
+
+<!-- ===== MR ROBOT ===== -->
+<section class="section" id="robot">
+ <div class="container">
+  <h2 class="section-title">🎬 Mr. Robot — Full Series</h2>
+  <p class="section-sub">Watch the most realistic hacking series. ₹99 per season — one-time payment.</p>
+  <div class="robot-grid" id="robotGrid"></div>
+ </div>
+</section>
+
+<!-- ===== CERTIFICATE ===== -->
+<section class="section" id="cert">
+ <div class="container">
+  <h2 class="section-title">🎓 Certification</h2>
+  <p class="section-sub">Complete ALL 12 modules (no skipping) → generate your WHITE DEVIL certificate with unique verify ID.</p>
+  <div class="cert-box">
+   <div style="text-align:center;font-weight:800;font-size:1.1rem;color:var(--accent-text)">Course Completion Progress</div>
+   <div class="cert-progress"><div class="cert-fill" id="certFill"></div></div>
+   <div style="text-align:center;font-size:1.5rem;font-weight:900;color:var(--fg)" id="certPercent">0%</div>
+   <div class="cert-modules" id="certModules"></div>
+   <button id="certBtn" disabled>Complete all modules (0/12)</button>
+   <div class="cert-paper" id="certDisplay">
+    <div class="wd">⚡ WHITE DEVIL</div>
+    <h2>CERTIFICATE OF COMPLETION</h2>
+    <div style="font-size:.75rem;color:#00ff4188">Cyber Security &amp; Ethical Hacking — Complete Course (12 Modules · 20 Topics · Guided Practice)</div>
+    <div class="cname" id="certName">—</div>
+    <div class="cid" id="certId">WD-XXXX-XXXX</div>
+    <div class="cbody" id="certBody"></div>
+    <div style="font-size:.75rem;color:#00ff4188">Designed by Santosh Chhetri · WHITE DEVIL Academy</div>
+    <button class="dl-cert" onclick="downloadCert()">⬇ Download Certificate (PDF)</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+
+<!-- ===== PRACTICE PLATFORMS ===== -->
+<section class="section" id="practice">
+ <div class="container">
+  <h2 class="section-title">🧪 Recommended Practice Platforms</h2>
+  <p class="section-sub">Practice course concepts in controlled, authorized environments. These are external platforms, not owned by WHITE DEVIL.</p>
+  <div class="res-grid">
+   <div class="res-card"><h4>🎯 TryHackMe</h4><p>Guided cybersecurity rooms for beginners through advanced learners.</p><a class="res-btn" href="https://tryhackme.com/" target="_blank" rel="noopener">Open Platform ↗</a></div>
+   <div class="res-card"><h4>🌐 PortSwigger Web Security Academy</h4><p>Free browser-based web security labs for OWASP and Burp Suite topics.</p><a class="res-btn" href="https://portswigger.net/web-security" target="_blank" rel="noopener">Open Labs ↗</a></div>
+   <div class="res-card"><h4>🐧 OverTheWire</h4><p>Linux and security-focused wargames for command-line practice.</p><a class="res-btn" href="https://overthewire.org/wargames/" target="_blank" rel="noopener">Open Wargames ↗</a></div>
+   <div class="res-card"><h4>🧩 Hack The Box</h4><p>Hands-on cybersecurity labs and challenges for authorized practice.</p><a class="res-btn" href="https://www.hackthebox.com/" target="_blank" rel="noopener">Open Platform ↗</a></div>
+  </div>
+ </div>
+</section>
+
+<!-- ===== RESOURCES ===== -->
+<section class="section" id="resources">
+ <div class="container">
+  <h2 class="section-title">📦 Free Resources</h2>
+  <p class="section-sub">Download cheatsheets &amp; templates — always free, no purchase needed.</p>
+  <div class="res-grid" id="resGrid"></div>
+ </div>
+</section>
+
+<!-- ===== FEEDBACK ===== -->
+<section class="section" id="feedback">
+ <div class="container">
+  <h2 class="section-title">💬 Give Feedback</h2>
+  <p class="section-sub">Help us improve WHITE DEVIL courses.</p>
+  <div class="fb-box">
+   <div class="stars" id="fbStars">
+    <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+   </div>
+   <select id="fbCat"><option value="Course Content">Course Content</option><option value="Videos / Player">Videos / Player</option><option value="Payment">Payment</option><option value="Website / Design">Website / Design</option><option value="Other">Other</option></select>
+   <textarea id="fbMsg" placeholder="Write your feedback… (English / Hindi / Nepali — any language)"></textarea>
+   <button class="f-btn" onclick="submitFeedback()">📨 Submit Feedback</button>
+  </div>
+ </div>
+</section>
+
+<!-- ===== DISCLAIMER ===== -->
+<section class="section" id="disclaimer">
+ <div class="container">
+  <div class="disclaimer">
+   <h3>🛡️ Ethical Use &amp; Legal Disclaimer</h3>
+   <p>This course is designed for education, cybersecurity awareness and authorized security testing.</p>
+   <p>Students must perform security testing only on:</p>
+   <ul>
+    <li>Their own systems</li>
+    <li>Dedicated training laboratories</li>
+    <li>Authorized training platforms / labs</li>
+    <li>Systems explicitly authorized for testing</li>
+    <li>Bug bounty targets within published program scope</li>
+   </ul>
+   <p style="margin-top:10px">Unauthorized access, data theft, disruption, credential theft or attacks against systems without permission are not permitted.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===== AI COURSE ASSISTANT ===== -->
+<section class="section" id="ai-assistant">
+ <div class="container">
+  <h2 class="section-title">🤖 AI Course Assistant</h2>
+  <p class="section-sub">Ask about modules, enrollment, payment, practice platforms, certificates, account settings and cybersecurity learning.</p>
+  <div class="info-box" style="max-width:900px">
+   <div class="chat-msgs" id="chatMsgsInline" style="height:180px;border:1px solid var(--border);border-radius:10px;margin-bottom:12px">
+    <div class="msg bot">👋 Namaste! I am the WHITE DEVIL course assistant. Ask me anything about the course.</div>
+   </div>
+   <div class="chat-input-row" style="border:0;padding:0">
+    <input id="chatInputInline" placeholder="Ask about the course…" onkeydown="if(event.key==='Enter')sendInlineChat()">
+    <button onclick="sendInlineChat()">➤</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ===== CONTACT US ===== -->
+<section class="section" id="contact">
+ <div class="container contact-wrap">
+  <h2 class="section-title">📞 Contact Us</h2>
+  <p class="section-sub">Have a question about the course, enrollment, payment or learning path? Fill the form and contact us directly.</p>
+  <div class="contact-box">
+   <form id="contactForm" onsubmit="submitContactForm(event)">
+    <div class="contact-grid">
+     <div class="contact-field"><label for="contactName">Full Name *</label><input id="contactName" required maxlength="80" placeholder="Your name" autocomplete="name"></div>
+     <div class="contact-field"><label for="contactEmail">Email *</label><input id="contactEmail" type="email" required maxlength="120" placeholder="you@example.com" autocomplete="email"></div>
+     <div class="contact-field"><label for="contactPhone">Phone / WhatsApp</label><input id="contactPhone" maxlength="30" placeholder="+971 ..." autocomplete="tel"></div>
+     <div class="contact-field"><label for="contactTopic">Topic</label><select id="contactTopic"><option>Course Information</option><option>Enrollment</option><option>Payment</option><option>Account / Login</option><option>Technical Support</option><option>Other</option></select></div>
+     <div class="contact-field full"><label for="contactMessage">Message *</label><textarea id="contactMessage" required maxlength="1500" placeholder="Write your message..."></textarea></div>
+    </div>
+    <div class="contact-actions">
+     <button class="f-btn" type="submit">💬 Send via WhatsApp</button>
+     <a class="f-btn ghost" href="https://wa.me/9779819470342" target="_blank" rel="noopener">📱 Open WhatsApp</a>
+    </div>
+   </form>
+   <p class="contact-note">Your form message is prepared in WhatsApp. No card or password information should be entered here.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+ <div class="footer-brand">
+  <div class="f-logo">⚡ WHITE DEVIL</div>
+  <div class="footer-tagline">Building Practical Cybersecurity Skills</div>
+  <p>Cyber Security &amp; Ethical Hacking Master Course — learn, practice and build job-ready IT security skills.</p>
+  <div class="footer-socials">
+   <a href="https://youtube.com/@mastersinwhitedevil" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+   <a href="https://wa.me/9779819470342" target="_blank" rel="noopener" aria-label="WhatsApp">◉</a>
+   <a href="#" onclick="go('contact');return false" aria-label="Contact">✉</a>
+   <a href="#" onclick="go('courses');return false" aria-label="Courses">▣</a>
+  </div>
+ </div>
+ <div class="footer-columns">
+  <div class="footer-col">
+   <h3>COURSE TRACKS</h3>
+   <a href="#" onclick="go('courses');return false">› Cyber Security Fundamentals</a>
+   <a href="#" onclick="go('courses');return false">› Ethical Hacking &amp; Pentesting</a>
+   <a href="#" onclick="go('courses');return false">› Web &amp; API Security</a>
+   <a href="#" onclick="go('courses');return false">› Network Security</a>
+   <a href="#" onclick="go('courses');return false">› Windows &amp; Active Directory</a>
+   <a href="#" onclick="go('courses');return false">› SOC &amp; Defensive Security</a>
+  </div>
+  <div class="footer-col">
+   <h3>TRENDING TOPICS</h3>
+   <a href="#" onclick="go('courses');return false">› Certified Ethical Hacking Concepts</a>
+   <a href="#" onclick="go('courses');return false">› Vulnerability Assessment &amp; VAPT</a>
+   <a href="#" onclick="go('courses');return false">› Bug Bounty Methodology</a>
+   <a href="#" onclick="go('courses');return false">› Linux &amp; Kali Linux</a>
+   <a href="#" onclick="go('practice');return false">› Legal Practice Resources</a>
+   <a href="#" onclick="go('ai-assistant');return false">› AI Cybersecurity Assistant</a>
+  </div>
+  <div class="footer-col">
+   <h3>SECURITY AWARENESS</h3>
+   <a href="#" onclick="go('courses');return false">› Cybersecurity Awareness</a>
+   <a href="#" onclick="go('courses');return false">› Safe Password Practices</a>
+   <a href="#" onclick="go('courses');return false">› Privacy &amp; OSINT Awareness</a>
+   <a href="#" onclick="go('courses');return false">› Responsible Disclosure</a>
+   <a href="#" onclick="go('practice');return false">› Authorized Practice Only</a>
+   <a href="#" onclick="go('faq');return false">› Cyber Ethics &amp; Legal Use</a>
+  </div>
+  <div class="footer-col">
+   <h3>STUDENT &amp; SUPPORT</h3>
+   <a href="#" onclick="go('contact');return false">› Have A Question</a>
+   <a href="#" onclick="go('contact');return false">› Contact Us</a>
+   <a href="#" onclick="openFeedbackModal();return false">› Send Feedback</a>
+   <a href="#" onclick="openCourseCatalog();return false">› Course Catalog</a>
+   <a href="#" onclick="go('practice');return false">› Practice Resources</a>
+   <a href="#" onclick="go('cert');return false">› Certificate</a>
+  </div>
+ </div>
+ <div class="footer-bottom">
+  <div class="footer-notice">⚠️ All cybersecurity and ethical-hacking training is for educational and authorized use only. Test only systems you own or have explicit permission to assess.</div>
+  <div class="credit">DESIGNED BY SANTOSH CHHETRI © 2026 · ALL RIGHTS RESERVED</div>
+ </div>
+</footer>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="authModal">
+ <div class="modal-box">
+  <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+  <div class="modal-title">👤 WHITE DEVIL Account</div>
+  <div class="tabs">
+   <div class="tab active" id="tabSignin" onclick="switchAuthTab('signin')">Sign In</div>
+   <div class="tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</div>
+  </div>
+  <div id="authSignin">
+   <input class="f-input" id="loginEmail" placeholder="Email address" autocomplete="username">
+   <div class="or-div" style="margin:8px 0">OR</div>
+   <div class="cc-row">
+    <select class="cc-sel" id="loginCC"></select>
+    <input class="f-input" style="margin-bottom:0" id="loginPhone" placeholder="Phone number" inputmode="numeric" autocomplete="tel-national">
+   </div>
+   <button class="f-btn" onclick="startLogin()">🔑 Send OTP — Sign In</button>
+  </div>
+  <div id="authSignup" style="display:none">
+   <input class="f-input" id="signupName" placeholder="Full name">
+   <input class="f-input" id="signupEmail" placeholder="Email address" autocomplete="email">
+   <div class="cc-row">
+    <select class="cc-sel" id="signupCC"></select>
+    <input class="f-input" style="margin-bottom:0" id="signupPhone" placeholder="Phone number" inputmode="numeric" autocomplete="tel-national">
+   </div>
+   <input class="f-input" id="signupPassword" type="password" placeholder="Create strong password" autocomplete="new-password" oninput="updateSignupPasswordStrength()">
+   <input class="f-input" id="signupPassword2" type="password" placeholder="Confirm password" autocomplete="new-password">
+   <div id="signupPasswordRules" style="font-size:.72rem;color:var(--muted);line-height:1.7;margin:-4px 0 12px">○ 10+ chars · ○ uppercase · ○ lowercase · ○ number · ○ symbol</div>
+   <button class="f-btn" onclick="startSignup()">📲 Send OTP — Create Account</button>
+  </div>
+  <div class="or-div">OR CONTINUE WITH</div>
+  <div class="social-row">
+   <button class="social-btn" onclick="startOAuth('google')"><span class="g">G</span> Google</button>
+   <button class="social-btn" onclick="startOAuth('apple')"><span class="a">🍎</span> Apple</button>
+   <button class="social-btn" onclick="startOAuth('github')"><span class="gh">⌥</span> GitHub</button>
+  </div>
+  <p class="auth-note">2FA (two-step verification) is available in Account Settings.</p>
+ </div>
+</div>
+
+<!-- ===== SOCIAL MODAL ===== -->
+<div class="modal-overlay" id="socialModal">
+ <div class="modal-box">
+  <button class="modal-close" onclick="closeModal('socialModal')">✕</button>
+  <div class="modal-title" id="socialTitle">Choose account</div>
+  <div id="socialList"></div>
+  <div class="or-div">OR</div>
+  <input class="f-input" id="socialEmail" placeholder="Enter another email address">
+  <button class="f-btn ghost" onclick="socialCustom()">Continue with this email</button>
+ </div>
+</div>
+
+<!-- ===== OTP MODAL ===== -->
+<div class="modal-overlay" id="otpModal">
+ <div class="modal-box">
+  <button class="modal-close" onclick="closeModal('otpModal')">✕</button>
+  <div class="modal-title">🔢 Verification Code</div>
+  <p style="text-align:center;color:var(--muted);font-size:.85rem" id="otpSentTo"></p>
+  <div class="otp-code-box" id="otpShow">------</div>
+  <input class="f-input" id="otpInput" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric" style="text-align:center;font-size:1.4rem;letter-spacing:8px;font-weight:900">
+  <button class="f-btn" onclick="verifyOtp()">✅ Verify &amp; Continue</button>
+  <button class="f-btn ghost" style="margin-top:10px" onclick="resendOtp()">🔄 Resend Code</button>
+  <p style="text-align:center;color:var(--muted);font-size:.72rem;margin-top:12px" id="otpTimer"></p>
+ </div>
+</div>
+
+<!-- ===== PAYMENT / CHECKOUT MODAL ===== -->
+<div class="modal-overlay" id="paymentModal">
+ <div class="modal-box wide checkout-modal">
+  <button class="modal-close" onclick="closeModal('paymentModal')">✕</button>
+  <div class="modal-title">💳 Checkout</div>
+  <div class="checkout-grid">
+   <div class="checkout-left">
+    <p class="checkout-label">Country</p>
+    <select class="f-input" id="checkoutCountry" aria-label="Country"><option value="">Please select...</option></select>
+    <p class="tax-note">Applicable transaction taxes may be collected where required by local law.</p>
+    <div class="checkout-notice">
+      <b>🔐 Secure PayPal Checkout</b>
+      <p>In order to complete your transaction, you will be transferred to PayPal's secure servers. This website does not collect or store your card number.</p>
+    </div>
+    <div id="paymentStatus" class="payment-status" style="display:none;margin:12px 0;padding:10px;border-radius:8px;text-align:center;font-size:.8rem"></div>
+    <button class="f-btn" id="payBtn" type="button" onclick="startExternalCheckout()">💳 Continue to PayPal</button>
+    <button class="f-btn ghost" type="button" style="margin-top:10px" onclick="openCourseCatalog()">📚 View All Courses</button>
+   </div>
+   <aside class="order-summary">
+    <h3>Order summary</h3>
+    <div class="summary-line"><span id="paymentItem">Course</span><strong id="summaryPrice">₹500</strong></div>
+    <div class="summary-total"><span>Total (1 course)</span><strong id="summaryTotal">₹500</strong></div>
+   </aside>
+  </div>
+  <label class="terms-check"><input type="checkbox" id="checkoutTerms"> <span>By completing your purchase, you agree to these <a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a>.</span></label>
+  
+  <button class="f-btn ghost" type="button" style="margin-top:8px" onclick="closeModal('paymentModal')">Cancel</button>
+ </div>
+</div>
+
+<!-- ===== VIDEO MODAL ===== -->
+<div class="modal-overlay" id="videoModal">
+ <div class="video-box">
+  <div class="video-head">
+   <h3 id="videoTitle">▶ Module</h3>
+   <button class="modal-close" style="position:static" onclick="closeVideo()">✕</button>
+  </div>
+  <div class="video-wrapper"><div id="videoIframe"></div></div>
+  <div class="sub-row">
+   <label style="font-size:.78rem;color:var(--muted)">🌐 Subtitles:</label>
+   <select id="subtitleLang" onchange="updateSubtitles()"></select>
+   <span class="watch-status" id="watchStatus">⏳ Watching…</span>
+  </div>
+ </div>
+</div>
+
+<!-- ===== PROFILE MODAL ===== -->
+<div class="modal-overlay" id="profileModal">
+ <div class="modal-box wide">
+  <button class="modal-close" onclick="closeModal('profileModal')">✕</button>
+  <div class="modal-title" style="display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap">👤 My Account <button class="icon-btn" type="button" onclick="toggleProfileFullscreen()">⛶ Full Screen</button></div>
+  <div id="profileBody"></div>
+ </div>
+</div>
+
+<!-- ===== PASSWORD CHANGE MODAL ===== -->
+<div class="modal-overlay" id="passwordModal">
+ <div class="modal-box">
+  <button class="modal-close" onclick="closeModal('passwordModal')">✕</button>
+  <div class="modal-title" id="passwordModalTitle">🔑 Change Password</div>
+  <div id="passwordOldWrap"><input class="f-input" id="oldPassword" type="password" placeholder="Current password" autocomplete="current-password"></div>
+  <input class="f-input" id="newPassword" type="password" placeholder="New strong password" autocomplete="new-password" oninput="updatePasswordStrength()">
+  <input class="f-input" id="confirmPassword" type="password" placeholder="Confirm new password" autocomplete="new-password">
+  <div id="passwordRules" style="font-size:.75rem;color:var(--muted);line-height:1.8;margin-bottom:12px">
+   <div>○ At least 10 characters</div><div>○ One uppercase letter</div><div>○ One lowercase letter</div><div>○ One number</div><div>○ One symbol</div>
+  </div>
+  <button class="f-btn" onclick="changePassword()">🔐 Save New Password</button>
+ </div>
+</div>
+
+<!-- ===== CHATBOT ===== -->
+<button class="chat-fab" onclick="toggleChat()" title="Chat with us">💬</button>
+<div class="chat-panel" id="chatPanel">
+ <div class="chat-head"><b>🤖 WHITE DEVIL AI Assistant</b><div class="chat-head-actions"><button class="chat-full" onclick="toggleChatFullscreen()" title="Full Screen">⛶</button><button class="chat-close" onclick="toggleChat()" title="Close">✕</button></div></div>
+ <div class="chat-msgs" id="chatMsgs">
+  <div class="msg bot">👋 Namaste! Welcome to WHITE DEVIL. Ask me about courses, prices, certificate, jobs, payment, practice or cybersecurity topics.</div>
+ </div>
+ <div class="chat-typing" id="chatTyping"><span></span><span></span><span></span><em>Typing…</em></div>
+ <div class="chat-input-row">
+  <input id="chatInput" placeholder="Type your question…" onkeydown="if(event.key==='Enter')sendChat()">
+  <button onclick="sendChat()">➤</button>
+ </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ================= SITE CONFIG =================
+   Production notes:
+   - Never put payment gateway secret keys or AI API keys in this HTML.
+   - Set PAYMENT_URL to your hosted checkout page.
+   - Set COURSE_CATALOG_URL to your course catalog page.
+   - CHAT_API_URL should point to your own server-side AI endpoint.
+================================================ */
+var PAYMENT_URL = 'https://YOUR-PAYMENT-DOMAIN.example/checkout';
+var OAUTH_SERVER_URL = '';
+var GOOGLE_CLIENT_ID = '';
+var GOOGLE_REDIRECT_URI = '';
+var APPLE_CLIENT_ID = '';
+var GITHUB_CLIENT_ID = '';
+var COURSE_CATALOG_URL = '/courses.html';
+var CHAT_API_URL = '/api/chat';
+var PAYMENT_SUCCESS_URL = '/courses.html?payment=success&course={course}';
+/* ================= CORE DATA ================= */
+var YT=''; /* Add your own course video ID when ready. */
+var MASTER_COURSE={id:'master',name:'Cyber Security & Ethical Hacking — Complete Course',price:500,modules:[
+ {id:'m1',name:'IT & Computer Fundamentals',icon:'🖥️',yt:YT,desc:'Computers, OS, hardware, files, how software works.',topics:['Computer hardware & architecture','Operating systems (Windows/Linux/macOS)','Files, processes & permissions','Data, storage & memory basics','Networking intro & IP addressing','Internet, browsers & DNS','Software installation & troubleshooting','Virtual machines (VMware/VirtualBox)','Command line basics (CMD & Bash)','Computer security foundations']},
+ {id:'m2',name:'Networking & Wireshark',icon:'🌐',yt:YT,desc:'Networks from zero — capture & analyze packets.',topics:['OSI & TCP/IP models','IP, subnetting & CIDR','Routing, switches & ARP','DNS, DHCP & HTTP/HTTPS','Ports, protocols & services','Wireshark installation & capture','Packet analysis & filters','TLS handshake analysis','Wi-Fi basics & WPA security','Network troubleshooting lab']},
+ {id:'m3',name:'Linux & Kali Linux',icon:'🐧',yt:YT,desc:'Master the hacker OS — command line power.',topics:['Kali Linux installation (VM)','Terminal & basic commands','File system & permissions','User & group management','Package management (apt)','Processes, services & logs','Text editors (vim/nano)','Networking commands (ip, nmap)','Bash scripting basics','Kali tools overview']},
+ {id:'m4',name:'Security Fundamentals',icon:'🛡️',yt:YT,desc:'Core security concepts & the hacker mindset.',topics:['CIA triad & security models','Threats, vulnerabilities & risks','Attack surfaces & vectors','Malware types (virus, worm, RAT)','Social engineering & phishing','Cryptography basics (hash, AES, RSA)','Security policies & best practices','Privacy & OSINT awareness','Cyber laws & ethics (India/Nepal/global)','Career paths in cybersecurity']},
+ {id:'m5',name:'Ethical Hacking & Pentesting',icon:'🥷',yt:YT,desc:'Full pentest methodology — plan, attack, report.',topics:['Pentesting phases (PTES)','Scope, rules of engagement & consent','Recon & target profiling','Vulnerability discovery','Exploitation fundamentals','Post-exploitation basics','Privilege escalation intro','Reporting & documentation','Legal authorization & ethics','Final pentest walkthrough']},
+ {id:'m6',name:'Recon & OSINT',icon:'🔎',yt:YT,desc:'Gather intel like a pro — open sources only.',topics:['Google dorking','Shodan & Censys','Subdomain enumeration','WHOIS & DNS records','Email & username OSINT','Social media intelligence','Metadata extraction (ExifTool)','theHarvester & Maltego','OSINT frameworks & tools','OSINT reporting & ethics']},
+ {id:'m7',name:'Web Application Security',icon:'🌍',yt:YT,desc:'Hack & secure websites — top OWASP risks.',topics:['How the web works (HTTP/S)','Burp Suite setup & proxy','SQL injection','XSS (stored/reflected/DOM)','CSRF & SSRF','Command injection & file upload','Authentication bypass','OWASP Top 10 deep dive','Web scanning (Nikto, ZAP)','Fixing & securing web apps']},
+ {id:'m8',name:'API Security',icon:'🔌',yt:YT,desc:'APIs power everything — learn to test them.',topics:['REST API basics & auth','JWT & OAuth 2.0','API enumeration & docs','IDOR & broken access control','Injection in APIs','Rate limiting & abuse','API key & token security','Postman for API testing','API fuzzing','Securing production APIs']},
+ {id:'m9',name:'VAPT (Vulnerability Assessment & PT)',icon:'🧨',yt:YT,desc:'Professional VAPT workflow & reporting.',topics:['Vulnerability vs exploit vs risk','Nessus/OpenVAS scanning','Manual verification of findings','CVSS scoring explained','Metasploit basics','Exploit development intro','Remediation & patching','VAPT report writing','Retesting & false positives','Client communication']},
+ {id:'m10',name:'Windows & Active Directory',icon:'🪟',yt:YT,desc:'Attack & defend Windows networks (AD).',topics:['Windows security architecture','Users, groups & privileges','Windows event logs','AD concepts (domain, DC, GPO)','Kerberos & NTLM basics','AD enumeration tools','BloodHound basics','Lateral movement intro','Defending AD (hardening)','AD lab setup (home)']},
+ {id:'m11',name:'Bug Bounty & Responsible Disclosure',icon:'💰',yt:YT,desc:'Earn legally by finding real bugs.',topics:['Bug bounty platforms (HackerOne/Bugcrowd)','Program scope & rules','Writing quality reports','Common payout bugs','Duplicates & how to avoid','Responsible disclosure','Legal & ethical boundaries','Building bug bounty workflow','From report to reward','PortSwigger Web Security Academy labs']},
+ {id:'m12',name:'SOC, SIEM & Incident Response',icon:'🚨',yt:YT,desc:'Blue team — detect, respond, protect.',topics:['SOC roles & operations','SIEM basics (Splunk/ELK)','Log analysis & correlation','Alert triage','Incident response lifecycle','Malware analysis intro','Threat hunting basics','IOCs & TTPs','Blue team tools','Build home SOC lab']}
+]};
+var ROBOT_SEASONS=[{id:'r1',name:'Mr. Robot',label:'Season 1 — 10 episodes',price:199,yt:YT},{id:'r2',name:'Mr. Robot',label:'Season 2 — 12 episodes',price:199,yt:YT},{id:'r3',name:'Mr. Robot',label:'Season 3 — 10 episodes',price:199,yt:YT},{id:'r4',name:'Mr. Robot',label:'Season 4 — 13 episodes',price:199,yt:YT}];
+var RESOURCES=[
+ {id:'res1',title:'Kali Linux Command Cheatsheet',desc:'50+ essential terminal commands',ext:'txt',content:'# KALI / LINUX COMMANDS\npwd — print working directory\nls -la — list files (all)\ncd /path — change directory\ncp -r src dst — copy recursively\nmv a b — move/rename\nrm -rf dir — delete (careful!)\nmkdir -p a/b — create dirs\nchmod 755 file — permissions\nchown user:group file — owner\ncat file — view file\nnano file — edit file\nps aux — all processes\ntop / htop — live monitor\nkill -9 PID — force kill\nsudo apt update && sudo apt upgrade -y\nip a — network interfaces\nip route — routing table\nss -tlnp — listening ports\nnmap -sV target — version scan\nnmap -p- target — all ports\ngrep -r "text" dir — search\ntail -f /var/log/syslog — live logs\nfind / -name "*.conf" — find files\ncrontab -e — cron jobs\nhistory — command history\nwhoami / id — user info\nnetstat -tulpn — open ports\nnc -lvnp 4444 — listener\ncurl -v http://target — verbose request\nwget url — download\nunzip file.zip — unzip\ntar -xzf file.tar.gz — extract\npython3 -m http.server — file server\nssh user@host — remote shell\nscp file user@host:/path — copy\n# Only use on systems you own / have permission!\n'},
+ {id:'res2',title:'Common Ports Reference',desc:'Top ports every pentester must know',ext:'txt',content:'# COMMON PORTS\n20/21 — FTP (file transfer)\n22 — SSH (secure shell)\n23 — Telnet (insecure)\n25 — SMTP (mail)\n53 — DNS\n67/68 — DHCP\n80 — HTTP\n110 — POP3\n143 — IMAP\n443 — HTTPS\n445 — SMB (Windows file sharing)\n3389 — RDP (Windows remote desktop)\n1433 — MSSQL\n3306 — MySQL\n5432 — PostgreSQL\n6379 — Redis\n8080 — HTTP proxy/alt web\n8443 — HTTPS alt\n9200 — Elasticsearch\n27017 — MongoDB\n# Port scanning only on authorized targets!\n'},
+ {id:'res3',title:'SQL Injection Cheatsheet',desc:'Detection & exploitation basics (for authorized labs)',ext:'txt',content:'# SQLi CHEATSHEET (authorized tests only)\n# Detection:\n\'  OR 1=1-- -\n\' OR \'1\'=\'1\n" OR ""="\n\' UNION SELECT NULL-- -\n# Error-based:\n\' AND 1=CONVERT(int,@@version)-- -\n# Union columns:\n\' ORDER BY 5-- -   (increase until error = column count)\n\' UNION SELECT 1,2,3-- -   (match column count)\n# Boolean:\n\' AND 1=1-- -  (true)\n\' AND 1=2-- -  (false)\n# Time-based (MySQL):\n\' AND SLEEP(5)-- -\n# Comments:\n-- -   #   /* */\n# Always practice in DVWA / Juice Shop / PortSwigger Academy / your own lab. NEVER on live sites without permission!\n'},
+ {id:'res4',title:'Wireshark Filters',desc:'Capture & display filters',ext:'txt',content:'# WIRESHARK FILTERS\n# Display filters:\nhttp\nhttp.request.method == "POST"\ntcp.port == 443\nip.addr == 192.168.1.10\ndns\ndns.qry.name contains "google"\nftp\nssl.handshake.type == 1\n# Capture filters:\ntcp port 80\nhost 10.0.0.5\nnot arp\nport 53 or port 80\n# Useful: follow TCP stream (right-click > Follow)\n# Filter credentials in plaintext protocols (ftp, http, telnet)\n# Only analyze traffic you are authorized to capture!\n'},
+ {id:'res5',title:'Burp Suite Shortcuts',desc:'Fast manual web testing',ext:'txt',content:'# BURP SUITE SHORTCUTS\nCtrl+Shift+B — toggle intercept\nCtrl+I — send to Intruder\nCtrl+R — send to Repeater\nCtrl+U — URL-encode\nCtrl+Shift+U — decode\nCtrl+Shift+Space — wordlist from site\n# Workflow:\n1. Proxy tab → turn intercept on\n2. Browse site → capture request\n3. Send to Repeater → modify & test\n4. Send to Intruder → fuzz parameters\n5. Analyze responses for bugs\n# Use ONLY against authorized targets.\n'},
+ {id:'res6',title:'Pentest Report Template',desc:'Professional report structure',ext:'md',content:'# PENETRATION TEST REPORT\n\n## 1. Executive Summary\n- Objective, scope, timeline\n- Critical findings count\n- Risk overview\n\n## 2. Scope & Authorization\n- In-scope assets\n- Authorization reference\n- Rules of engagement\n\n## 3. Methodology\n- Recon → Scanning → Exploitation → Post-exploitation → Reporting\n\n## 4. Findings (per vulnerability)\n### [SEV] Title — Host\n- **CVSS:** 8.1 (High)\n- **Description:** what & where\n- **Steps to reproduce:** 1..2..3\n- **Impact:** business risk\n- **Remediation:** fix steps\n- **References:** CVE/OWASP\n\n## 5. Tools Used\n## 6. Appendix (raw evidence)\n\n# Fill this ONLY for authorized engagements.\n'},
+ {id:'res7',title:'PortSwigger Academy Lab Tracker',desc:'Checklist of Web Security Academy labs (free)',ext:'txt',content:'# PORTWIGGER WEB SECURITY ACADEMY — LAB TRACKER\n# Free labs: portswigger.net/web-security/all-labs\n# Tick labs as you complete them (authorized practice platform)\n\n[ ] SQL injection — all 9 labs\n[ ] Authentication — all 12 labs\n[ ] Path traversal — all 7 labs\n[ ] Command injection — all 5 labs\n[ ] Business logic — all 13 labs\n[ ] Information disclosure — all 6 labs\n[ ] Access control — all 13 labs\n[ ] File upload — all 7 labs\n[ ] SSRF — all 4 labs\n[ ] XXE — all 9 labs\n[ ] CSRF — all 7 labs\n[ ] XSS — all 12 labs\n[ ] Insecure deserialization — all 7 labs\n[ ] WebSockets — all 2 labs\n[ ] API testing — all 7 labs\n[ ] NoSQL injection — all 7 labs\n[ ] JWT — all 7 labs\n[ ] Prototype pollution — all 6 labs\n[ ] Clickjacking — all 2 labs\n[ ] DOM-based vulnerabilities — all 9 labs\n[ ] Cross-origin (CORS) — all 2 labs\n[ ] HTTP Host header — all 3 labs\n[ ] OAuth — all 7 labs\n[ ] GraphQL — all 7 labs\n[ ] Server-side template injection — all 6 labs\n\n# Total: 100% free, run in your browser, 100% authorized.\n'}
+];
+var SOCIAL_PROVIDERS={
+ google:{label:'Continue with Google'},
+ apple:{label:'Continue with Apple'},
+ github:{label:'Continue with GitHub'}
+};
+var COUNTRIES=[['AF','Afghanistan',93],['AL','Albania',355],['DZ','Algeria',213],['AS','American Samoa',1684],['AD','Andorra',376],['AO','Angola',244],['AI','Anguilla',1264],['AG','Antigua and Barbuda',1268],['AR','Argentina',54],['AM','Armenia',374],['AW','Aruba',297],['AU','Australia',61],['AT','Austria',43],['AZ','Azerbaijan',994],['BS','Bahamas',1242],['BH','Bahrain',973],['BD','Bangladesh',880],['BB','Barbados',1246],['BY','Belarus',375],['BE','Belgium',32],['BZ','Belize',501],['BJ','Benin',229],['BM','Bermuda',1441],['BT','Bhutan',975],['BO','Bolivia',591],['BA','Bosnia and Herzegovina',387],['BW','Botswana',267],['BR','Brazil',55],['BN','Brunei',673],['BG','Bulgaria',359],['BF','Burkina Faso',226],['BI','Burundi',257],['KH','Cambodia',855],['CM','Cameroon',237],['CA','Canada',1],['CV','Cape Verde',238],['KY','Cayman Islands',1345],['CF','Central African Republic',236],['TD','Chad',235],['CL','Chile',56],['CN','China',86],['CO','Colombia',57],['KM','Comoros',269],['CG','Congo',242],['CD','Congo (DRC)',243],['CR','Costa Rica',506],['CI',"Côte d'Ivoire",225],['HR','Croatia',385],['CU','Cuba',53],['CY','Cyprus',357],['CZ','Czech Republic',420],['DK','Denmark',45],['DJ','Djibouti',253],['DM','Dominica',1767],['DO','Dominican Republic',1809],['EC','Ecuador',593],['EG','Egypt',20],['SV','El Salvador',503],['GQ','Equatorial Guinea',240],['ER','Eritrea',291],['EE','Estonia',372],['SZ','Eswatini',268],['ET','Ethiopia',251],['FJ','Fiji',679],['FI','Finland',358],['FR','France',33],['GF','French Guiana',594],['PF','French Polynesia',689],['GA','Gabon',241],['GM','Gambia',220],['GE','Georgia',995],['DE','Germany',49],['GH','Ghana',233],['GI','Gibraltar',350],['GR','Greece',30],['GL','Greenland',299],['GD','Grenada',1473],['GP','Guadeloupe',590],['GU','Guam',1671],['GT','Guatemala',502],['GG','Guernsey',1481],['GN','Guinea',224],['GW','Guinea-Bissau',245],['GY','Guyana',592],['HT','Haiti',509],['HN','Honduras',504],['HK','Hong Kong',852],['HU','Hungary',36],['IS','Iceland',354],['IN','India',91],['ID','Indonesia',62],['IR','Iran',98],['IQ','Iraq',964],['IE','Ireland',353],['IM','Isle of Man',44],['IL','Israel',972],['IT','Italy',39],['JM','Jamaica',1876],['JP','Japan',81],['JE','Jersey',44],['JO','Jordan',962],['KZ','Kazakhstan',7],['KE','Kenya',254],['KI','Kiribati',686],['KP','North Korea',850],['KR','South Korea',82],['KW','Kuwait',965],['KG','Kyrgyzstan',996],['LA','Laos',856],['LV','Latvia',371],['LB','Lebanon',961],['LS','Lesotho',266],['LR','Liberia',231],['LY','Libya',218],['LI','Liechtenstein',423],['LT','Lithuania',370],['LU','Luxembourg',352],['MO','Macau',853],['MG','Madagascar',261],['MW','Malawi',265],['MY','Malaysia',60],['MV','Maldives',960],['ML','Mali',223],['MT','Malta',356],['MH','Marshall Islands',692],['MQ','Martinique',596],['MR','Mauritania',222],['MU','Mauritius',230],['YT','Mayotte',262],['MX','Mexico',52],['FM','Micronesia',691],['MD','Moldova',373],['MC','Monaco',377],['MN','Mongolia',976],['ME','Montenegro',382],['MS','Montserrat',1664],['MA','Morocco',212],['MZ','Mozambique',258],['MM','Myanmar',95],['NA','Namibia',264],['NR','Nauru',674],['NP','Nepal',977],['NL','Netherlands',31],['NC','New Caledonia',687],['NZ','New Zealand',64],['NI','Nicaragua',505],['NE','Niger',227],['NG','Nigeria',234],['NU','Niue',683],['MK','North Macedonia',389],['NO','Norway',47],['OM','Oman',968],['PK','Pakistan',92],['PW','Palau',680],['PS','Palestine',970],['PA','Panama',507],['PG','Papua New Guinea',675],['PY','Paraguay',595],['PE','Peru',51],['PH','Philippines',63],['PL','Poland',48],['PT','Portugal',351],['PR','Puerto Rico',1787],['QA','Qatar',974],['RE','Réunion',262],['RO','Romania',40],['RU','Russia',7],['RW','Rwanda',250],['BL','Saint Barthélemy',590],['SH','Saint Helena',290],['KN','Saint Kitts and Nevis',1869],['LC','Saint Lucia',1758],['MF','Saint Martin',590],['PM','Saint Pierre and Miquelon',508],['VC','Saint Vincent',1784],['WS','Samoa',685],['SM','San Marino',378],['ST','São Tomé and Príncipe',239],['SA','Saudi Arabia',966],['SN','Senegal',221],['RS','Serbia',381],['SC','Seychelles',248],['SL','Sierra Leone',232],['SG','Singapore',65],['SK','Slovakia',421],['SI','Slovenia',386],['SB','Solomon Islands',677],['SO','Somalia',252],['ZA','South Africa',27],['SS','South Sudan',211],['ES','Spain',34],['LK','Sri Lanka',94],['SD','Sudan',249],['SR','Suriname',597],['SE','Sweden',46],['CH','Switzerland',41],['SY','Syria',963],['TW','Taiwan',886],['TJ','Tajikistan',992],['TZ','Tanzania',255],['TH','Thailand',66],['TL','Timor-Leste',670],['TG','Togo',228],['TO','Tonga',676],['TT','Trinidad and Tobago',1868],['TN','Tunisia',216],['TR','Turkey',90],['TM','Turkmenistan',993],['TV','Tuvalu',688],['UG','Uganda',256],['UA','Ukraine',380],['AE','United Arab Emirates',971],['GB','United Kingdom',44],['US','United States',1],['UY','Uruguay',598],['UZ','Uzbekistan',998],['VU','Vanuatu',678],['VE','Venezuela',58],['VN','Vietnam',84],['YE','Yemen',967],['ZM','Zambia',260],['ZW','Zimbabwe',263]];
+/* ================= I18N ================= */
+var LANG_CODES=['en','hi','ne','zh','ar','ru','bn','es','fr','de','ja','ko','pt','it','tr','vi','th','id','ur','fa'];
+var LANG_MAP={en:'English',hi:'हिन्दी',ne:'नेपाली',zh:'中文',ar:'العربية',ru:'Русский',bn:'বাংলা',es:'Español',fr:'Français',de:'Deutsch',ja:'日本語',ko:'한국어',pt:'Português',it:'Italiano',tr:'Türkçe',vi:'Tiếng Việt',th:'ไทย',id:'Bahasa',ur:'اردو',fa:'فارسی'};
+var HERO_TEXTS={
+ en:{t:'Cyber Security &amp; Ethical Hacking Master Course',d:'12 modules · 20 topics · guided practice · external legal labs · job-ready skills · certificate. Designed by Santosh Chhetri for WHITE DEVIL.'},
+ hi:{t:'Cyber Security &amp; Ethical Hacking Master Course',d:'12 मॉड्यूल · 20 टॉपिक · गाइडेड प्रैक्टिस · लीगल एक्सटर्नल लैब्स · जॉब-रेडी स्किल्स · सर्टिफिकेट। Santosh Chhetri द्वारा डिज़ाइन।'},
+ ne:{t:'Cyber Security &amp; Ethical Hacking Master Course',d:'12 मोड्युल · 20 टपिक · गाइडेड प्र्याक्टिस · कानुनी एक्सटर्नल ल्याब · जागिर-तयार सीप · प्रमाणपत्र। Santosh Chhetri द्वारा डिजाइन।'},
+ zh:{t:'学习网络安全与道德黑客课程 — 主题',d:'12个模块 · 20个主题 · 实践实验室 · 真实项目 · 就业技能 · 证书。由Santosh Chhetri为WHITE DEVIL设计。'}
+};
+/* ================= STORAGE / STATE ================= */
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v===null?d:v;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+var D={purchased:[],completed:{},progress:{},cert:null};
+function getUsers(){try{return JSON.parse(lsGet('wd_users','[]'));}catch(e){return [];}}
+function saveUsers(u){lsSet('wd_users',JSON.stringify(u));}
+function currentUser(){var id=lsGet('wd_session','');if(!id)return null;var us=getUsers();for(var i=0;i<us.length;i++)if(us[i].id===id)return us[i];return null;}
+function saveUserObj(u){var us=getUsers();for(var i=0;i<us.length;i++)if(us[i].id===u.id)us[i]=u;saveUsers(us);}
+function loadData(){
+ var d={purchased:[],completed:{},progress:{},cert:null};
+ try{var g=lsGet('wd_guest','');if(g)d=JSON.parse(g);}catch(e){}
+ var u=currentUser();D=u&&u.data?u.data:d;
+}
+function saveData(){var u=currentUser();if(u){u.data=D;saveUserObj(u);}else lsSet('wd_guest',JSON.stringify(D));}
+function union(a,b){var r=a.slice();for(var i=0;i<b.length;i++)if(r.indexOf(b[i])===-1)r.push(b[i]);return r;}
+function randId(){return Math.random().toString(36).substring(2,8)+Date.now().toString(36);}
+function isOwned(id){return D.purchased.indexOf(id)!==-1;}
+function grantAccess(id){if(D.purchased.indexOf(id)===-1){D.purchased.push(id);saveData();}}
+function sanitize(s){if(!s)return '';return String(s).replace(/[<>]/g,'');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showToast(msg,isErr){
+ var t=document.getElementById('toast');
+ t.textContent=msg;t.className=isErr?'show err':'show';
+ if(isErr)Sound.play('error');else Sound.play('notify');
+ clearTimeout(t._tm);t._tm=setTimeout(function(){t.className='';},3500);
+}
+/* ================= SOUND FX ================= */
+var Sound={
+ ctx:null,enabled:true,
+ init:function(){if(!this.ctx){try{this.ctx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(this.ctx&&this.ctx.state==='suspended')this.ctx.resume();},
+ load:function(){this.enabled=lsGet('wd_sound','1')==='1';this.updateBtn();},
+ toggle:function(){this.enabled=!this.enabled;lsSet('wd_sound',this.enabled?'1':'0');this.updateBtn();if(this.enabled)this.play('click');},
+ updateBtn:function(){var b=document.getElementById('soundBtn');if(b)b.textContent=this.enabled?'🔊':'🔇';},
+ tone:function(f,d,s,v,t){if(!this.ctx)return;var o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=t||'square';o.frequency.setValueAtTime(f,d);g.gain.setValueAtTime(v||.07,d);g.gain.exponentialRampToValueAtTime(.001,d+s);o.connect(g);g.connect(this.ctx.destination);o.start(d);o.stop(d+s+.02);},
+ play:function(type){
+  if(!this.enabled)return;this.init();if(!this.ctx)return;
+  var n=this.ctx.currentTime;
+  if(type==='click')this.tone(880,n,.07,.05);
+  else if(type==='success'){this.tone(523,n,.15,.08);this.tone(659,n+.12,.15,.08);this.tone(784,n+.24,.25,.08);}
+  else if(type==='error'){this.tone(240,n,.2,.08,'sawtooth');this.tone(160,n+.15,.25,.08,'sawtooth');}
+  else if(type==='notify'){this.tone(988,n,.1,.05);this.tone(1319,n+.1,.15,.05);}
+  else if(type==='win'){this.tone(523,n,.15,.08);this.tone(659,n+.14,.15,.08);this.tone(784,n+.28,.15,.08);this.tone(1047,n+.42,.4,.09);}
+  else if(type==='otp'){this.tone(700,n,.08,.06);this.tone(950,n+.09,.12,.06);}
+ }
+};
+document.addEventListener('click',function(e){if(e.target.closest('button,a,.tab,.stars span,.switch,#themeSel,select'))Sound.play('click');},true);
+/* ================= THEME ================= */
+function setTheme(t){lsSet('wd_theme',t);applyTheme();}
+function applyTheme(){
+ var saved=lsGet('wd_theme','system');
+}
+/* ================= SPLASH ================= */
+function runSplash(){
+ var pct=0,bar=document.getElementById('splashBar'),lbl=document.getElementById('splashPct');
+ var iv=setInterval(function(){
+  pct+=Math.random()*12+2;
+  if(pct>=100){pct=100;clearInterval(iv);
+   Sound.play('win');
+   setTimeout(function(){
+    var s=document.getElementById('splash');
+    s.style.opacity='0';
+    document.body.classList.remove('splash-lock');
+    setTimeout(function(){s.style.display='none';},700);
+   },400);
+  }
+  bar.style.width=pct+'%';lbl.textContent=Math.floor(pct)+'%';
+ },180);
+}
+/* ================= COUNTRY CODES ================= */
+function initCC(){
+ ['loginCC','signupCC'].forEach(function(id){
+  var s=document.getElementById(id);if(!s)return;
+  s.innerHTML='';var def=null;
+  COUNTRIES.forEach(function(c){
+   var o=document.createElement('option');o.value='+'+c[2];o.textContent='+'+c[2]+' '+c[1];
+   if(c[0]==='NP')def=o;if(c[0]==='IN'&&!def)def=o;
+   s.appendChild(o);
+  });
+  if(def)def.selected=true;
+ });
+}
+function phoneFull(ccSel,phoneSel){return document.getElementById(ccSel).value+document.getElementById(phoneSel).value.replace(/\D/g,'');}
+function initCheckoutCountry(){
+ var s=document.getElementById('checkoutCountry'); if(!s)return;
+ s.innerHTML='<option value="">Please select...</option>';
+ COUNTRIES.forEach(function(c){var o=document.createElement('option');o.value=c[0];o.textContent=c[1];s.appendChild(o);});
+ try{if((navigator.language||'').toLowerCase().indexOf('en-ae')===0||Intl.DateTimeFormat().resolvedOptions().timeZone==='Asia/Dubai')s.value='AE';}catch(e){}
+}
+
+/* ================= AUTH ================= */
+var otpState=null,otpTimerIv=null;
+function switchAuthTab(mode){
+ document.getElementById('tabSignin').classList.toggle('active',mode==='signin');
+ document.getElementById('tabSignup').classList.toggle('active',mode==='signup');
+ document.getElementById('authSignin').style.display=mode==='signin'?'block':'none';
+ document.getElementById('authSignup').style.display=mode==='signup'?'block':'none';
+}
+function openAuth(){closeModal('profileModal');document.getElementById('authModal').classList.add('active');}
+function isValidEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+function isValidPhone(v){return /^\+?[0-9]{7,15}$/.test(v);}
+function genOtp(){return String(Math.floor(100000+Math.random()*900000));}
+function sendOtp(msg){
+ otpState.otp=genOtp();otpState.expiry=Date.now()+180000;
+ document.getElementById('otpSentTo').textContent=msg;
+ document.getElementById('otpShow').textContent=otpState.otp;
+ document.getElementById('otpInput').value='';
+ document.getElementById('otpModal').classList.add('active');
+ Sound.play('otp');startOtpTimer();
+}
+function startOtpTimer(){
+ clearInterval(otpTimerIv);
+ var el=document.getElementById('otpTimer');
+ function tick(){
+  var left=Math.max(0,Math.round((otpState.expiry-Date.now())/1000));
+  el.textContent='Code expires in '+left+'s';
+  if(left<=0){clearInterval(otpTimerIv);el.textContent='Code expired — press Resend.';}
+ }
+ tick();otpTimerIv=setInterval(tick,1000);
+}
+function resendOtp(){if(otpState){otpState.otp=genOtp();otpState.expiry=Date.now()+180000;document.getElementById('otpShow').textContent=otpState.otp;document.getElementById('otpInput').value='';startOtpTimer();Sound.play('otp');showToast('🔄 New code sent!');}}
+function startSignup(){
+ var name=sanitize(document.getElementById('signupName').value.trim());
+ var email=document.getElementById('signupEmail').value.trim();
+ var phone=phoneFull('signupCC','signupPhone');
+ var pass=document.getElementById('signupPassword').value;
+ var pass2=document.getElementById('signupPassword2').value;
+ if(!name){showToast('⚠️ Enter your full name',true);return;}
+ if(!isValidEmail(email)&&!isValidPhone(phone)){showToast('⚠️ Enter a valid email or phone number',true);return;}
+ if(!passwordIsStrong(pass)){showToast('⚠️ Create a strong password with 10+ chars, uppercase, lowercase, number and symbol.',true);return;}
+ if(pass!==pass2){showToast('⚠️ Passwords do not match.',true);return;}
+ var key=isValidEmail(email)?email.toLowerCase():phone;
+ var users=getUsers();
+ if(users.some(function(u){return u.email.toLowerCase()===key.toLowerCase()||(u.phone&&u.phone===phone);})){showToast('⚠️ Account already exists — Sign In instead',true);return;}
+ otpState={mode:'signup',name:name,target:key,email:isValidEmail(email)?email:'',phone:isValidPhone(phone)?phone:'',provider:'email',passwordHash:hashPassword(pass)};
+ sendOtp('📨 Verification code sent to '+key);
+}
+function startLogin(){
+ var email=document.getElementById('loginEmail').value.trim();
+ var phone=phoneFull('loginCC','loginPhone');
+ if(!isValidEmail(email)&&!isValidPhone(phone)){showToast('⚠️ Enter a valid email or phone number',true);return;}
+ var key=isValidEmail(email)?email.toLowerCase():phone;
+ var users=getUsers(),u=null;
+ for(var i=0;i<users.length;i++)if(users[i].email.toLowerCase()===key.toLowerCase()||(users[i].phone&&users[i].phone===phone)){u=users[i];break;}
+ if(!u){showToast('⚠️ No account found — please Sign Up first',true);return;}
+ otpState={mode:'login',target:key,email:key,userId:u.id,step:1};
+ sendOtp('📨 Verification code sent to '+key);
+}
+function verifyOtp(){
+ if(!otpState)return;
+ var code=document.getElementById('otpInput').value.replace(/\s/g,'');
+ if(!otpState.otp||Date.now()>otpState.expiry){showToast('❌ Code expired — press Resend',true);return;}
+ if(code!==otpState.otp){showToast('❌ Wrong code — try again',true);Sound.play('error');return;}
+ Sound.play('success');
+ if(otpState.mode==='signup'){
+  var users=getUsers();
+  var u={id:'u_'+randId(),name:otpState.name,email:otpState.email,phone:otpState.phone||'',provider:otpState.provider||'email',passwordHash:otpState.passwordHash||'',avatar:'',banner:'',bio:'',twoFA:false,createdAt:Date.now(),data:{purchased:[],completed:{},progress:{},cert:null}};
+  users.push(u);saveUsers(users);
+  closeModal('otpModal');closeModal('authModal');loginUser(u,true);
+ }else if(otpState.mode==='login'){
+  var us=getUsers(),u2=null;
+  for(var i=0;i<us.length;i++)if(us[i].id===otpState.userId)u2=us[i];
+  if(u2&&u2.twoFA&&otpState.step===1){otpState.step=2;otpState.target=u2.email;sendOtp('🔐 2FA step 2 — code sent to your device');}
+  else{closeModal('otpModal');closeModal('authModal');loginUser(u2,false);}
+ }else if(otpState.mode==='enable2fa'){
+  var users3=getUsers(),u3=null;
+  for(var i=0;i<users3.length;i++)if(users3[i].id===otpState.userId)u3=users3[i];
+  if(u3){u3.twoFA=true;saveUserObj(u3);showToast('✅ 2FA enabled — extra security ON');}
+  closeModal('otpModal');renderProfileModal();
+ }else if(otpState.mode==='changeEmail'){
+  var users4=getUsers(),u4=null;
+  for(var i=0;i<users4.length;i++)if(users4[i].id===otpState.userId)u4=users4[i];
+  if(u4){u4.email=otpState.newEmail;if(/^\+?[0-9]{7,15}$/.test(otpState.newEmail))u4.phone=otpState.newEmail;saveUserObj(u4);showToast('✅ Contact updated');}
+  closeModal('otpModal');renderProfileModal();
+ }
+ otpState=null;
+}
+/* ================= SOCIAL LOGIN ================= */
+function openSocial(provider){ startOAuth(provider); }
+function socialCustom(){ showToast('Please use Google, Apple or GitHub Sign In.',true); }
+function handleSocial(provider,email,name){ showToast('Please complete secure OAuth sign-in first.',true); }
+async function restoreOAuthSession(){
+ try{
+  var r=await fetch('/auth/me',{credentials:'include'});
+  if(!r.ok)return;
+  var j=await r.json(); if(!j.authenticated||!j.user)return;
+  var p=j.user,users=getUsers(),u=null;
+  for(var i=0;i<users.length;i++){if((p.email&&users[i].email.toLowerCase()===p.email.toLowerCase())||(users[i].oauthId===p.id&&users[i].provider===p.provider)){u=users[i];break;}}
+  if(!u){u={id:'u_'+randId(),name:p.name||p.email||'User',email:p.email||'',phone:'',provider:p.provider||'oauth',oauthId:p.id||'',avatar:p.avatar||'',banner:'',bio:'',twoFA:false,createdAt:Date.now(),data:{purchased:[],completed:{},progress:{},cert:null}};users.push(u);saveUsers(users);}
+  else{u.name=p.name||u.name;u.avatar=p.avatar||u.avatar;u.oauthId=p.id||u.oauthId;u.provider=p.provider||u.provider;saveUserObj(u);}
+  loginUser(u,true);
+ }catch(e){}
+}
+function loginUser(u,merge){
+ if(merge){
+  try{var g=lsGet('wd_guest','');if(g){var gd=JSON.parse(g);
+   u.data.purchased=union(u.data.purchased,gd.purchased);
+   for(var k in gd.completed)if(!u.data.completed[k])u.data.completed[k]=true;
+   for(var k2 in gd.progress)if(!u.data.progress[k2])u.data.progress[k2]=gd.progress[k2];
+   if(gd.cert&&!u.data.cert)u.data.cert=gd.cert;
+  }}catch(e){}
+  lsSet('wd_guest','');
+ }
+ lsSet('wd_session',u.id);
+ saveUserObj(u);D=u.data;
+ updateAuthUI();renderAll();
+ showToast('👋 Welcome, '+u.name+'!');Sound.play('success');
+}
+function logoutUser(){
+ lsSet('wd_session','');
+ loadData();updateAuthUI();renderAll();closeModal('profileModal');
+ showToast('👋 Signed out. Your data is safe in your account.');
+}
+function deleteAccount(){
+ var u=currentUser();if(!u)return;
+ if(!confirm('⚠️ Delete your account permanently? All progress, purchases & certificate will be lost.'))return;
+ var users=getUsers(),kept=[];
+ for(var i=0;i<users.length;i++)if(users[i].id!==u.id)kept.push(users[i]);
+ saveUsers(kept);lsSet('wd_session','');
+ loadData();updateAuthUI();renderAll();closeModal('profileModal');
+ showToast('🗑️ Account deleted.');
+}
+function exportData(){
+ var u=currentUser();
+ var blob=new Blob([JSON.stringify({account:{name:u?u.name:null,email:u?u.email:null},data:D},null,2)],{type:'application/json'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='white-devil-data.json';a.click();
+ showToast('📥 Data exported!');
+}
+function toggle2FA(){
+ var u=currentUser();if(!u){openAuth();return;}
+ if(!u.twoFA){otpState={mode:'enable2fa',target:u.email,email:u.email,userId:u.id};sendOtp('🔐 Verify code to enable 2FA ('+u.email+')');}
+ else{u.twoFA=false;saveUserObj(u);showToast('2FA disabled');renderProfileModal();}
+}
+function changeEmail(){
+ var u=currentUser();if(!u)return;
+ var ne=prompt('Enter new email or phone:',u.email);
+ if(!ne||(!isValidEmail(ne)&&!isValidPhone(ne))){showToast('⚠️ Invalid contact',true);return;}
+ otpState={mode:'changeEmail',target:ne,email:ne,userId:u.id,newEmail:ne};
+ sendOtp('📨 Verify new contact '+ne);
+}
+/* ================= AUTH UI ================= */
+function updateAuthUI(){
+ var area=document.getElementById('authArea');
+ var u=currentUser();
+ if(u){
+  var av=u.avatar?'<img class="user-avatar" src="'+u.avatar+'" alt="avatar">':'<div class="user-avatar" style="display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900">'+esc((u.name||'?').charAt(0).toUpperCase())+'</div>';
+  area.innerHTML='<div class="user-chip" onclick="event.stopPropagation();document.getElementById(\'userDD\').classList.toggle(\'open\')">'+av+'<span>'+esc(u.name.split(' ')[0])+'</span>'
+   +'<div class="dd" id="userDD">'
+   +'<a onclick="openProfile(\'profile\')">👤 My Profile</a>'
+   +'<a onclick="openProfile(\'courses\')">📚 My Courses</a>'
+   +'<a onclick="openProfile(\'account\')">⚙️ Manage Account</a>'
+   +'<a onclick="openFeedbackModal()">💬 Feedback</a>'
+   +'<button class="del" onclick="logoutUser()">🚪 Sign Out</button>'
+   +'</div></div>';
+ }else{
+  area.innerHTML='<button class="auth-btn" onclick="openAuth()">👤 Sign In</button>';
+ }
+}
+document.addEventListener('click',function(e){
+ var dd=document.getElementById('userDD');
+ if(dd&&!e.target.closest('.user-chip'))dd.classList.remove('open');
+});
+/* ================= RENDER ================= */
+function renderAll(){renderModules();renderRobot();renderResources();loadCert();}
+function renderModules(){
+ var grid=document.getElementById('moduleGrid');grid.innerHTML='';
+ MASTER_COURSE.modules.forEach(function(m,idx){
+  var owned=isOwned('master');
+  var card=document.createElement('div');card.className='course-card';
+  var topics=m.topics.map(function(t){return '<li>'+esc(t)+'</li>';}).join('');
+  var btn=owned?'<button class="btn-buy gold" onclick="watchModule(\''+m.id+'\')">▶ Watch Module</button>'
+   :'<button class="btn-buy" onclick="buyMaster()">Part of ₹500 Course</button>';
+  card.innerHTML='<span class="num-badge">Module '+(idx+1)+' / 12</span><div class="icon">'+m.icon+'</div><h3>'+esc(m.name)+'</h3><p>'+esc(m.desc)+'</p>'
+   +'<details><summary>📖 Topics ('+m.topics.length+') — click to view</summary><ul>'+topics+'</ul></details>'
+   +'<div class="price">₹'+MASTER_COURSE.price+'</div>'+btn;
+  grid.appendChild(card);
+ });
+}
+function renderRobot(){
+ var grid=document.getElementById('robotGrid');grid.innerHTML='';
+ ROBOT_SEASONS.forEach(function(s){
+  var owned=isOwned(s.id);var card=document.createElement('div');card.className='robot-card';
+  var btns;
+  if(owned){btns='<div class="btn-row"><button class="btn-robot btn-watch" onclick="watchCourse(\''+s.id+'\')">▶ Watch</button><button class="btn-robot btn-dl" onclick="dlSeason(\''+s.id+'\')">⬇ Download</button></div>';}
+  else{btns='<button class="btn-robot" onclick="openPayment(\'robot\',\''+s.id+'\')">Buy — ₹'+s.price+'</button>';}
+  card.innerHTML='<div class="poster">🎬</div><h3>'+esc(s.name)+'</h3><div class="season-label">📺 '+esc(s.label)+'</div><div class="price">₹'+s.price+' <small>only</small></div>'+btns;
+  grid.appendChild(card);
+ });
+}
+function renderResources(){
+ var grid=document.getElementById('resGrid');grid.innerHTML='';
+ RESOURCES.forEach(function(r){
+  var d=document.createElement('div');d.className='res-card';
+  d.innerHTML='<h4>📄 '+esc(r.title)+'</h4><p>'+esc(r.desc)+'</p><button class="res-btn" onclick="downloadResource(\''+r.id+'\')">⬇ Download ('+r.ext+')</button>';
+  grid.appendChild(d);
+ });
+}
+function downloadResource(id){
+ var r=null;for(var i=0;i<RESOURCES.length;i++)if(RESOURCES[i].id===id)r=RESOURCES[i];
+ if(!r)return;
+ var blob=new Blob([r.content],{type:'text/plain'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download=r.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.'+r.ext;a.click();
+ Sound.play('success');showToast('📥 '+r.title+' downloaded!');
+}
+function dlSeason(id){
+ var it=allItems().filter(function(x){return x.id===id;})[0];
+ if(!it||!isOwned(id))return;
+ showToast('📥 Download link sent on WhatsApp!');
+ window.open('https://wa.me/9779819470342?text='+encodeURIComponent('Hi WHITE DEVIL! I purchased '+it.name+' (₹'+it.price+'). Please send me the download link.'));
+}
+function allItems(){
+ var r=ROBOT_SEASONS.map(function(s){return s;});
+ r.push(MASTER_COURSE);
+ return r;
+}
+var ALL_ITEMS=allItems();
+/* ================= PAYMENT ================= */
+var activeItem=null;
+function requireAuth(){
+ if(!currentUser()){openAuth();showToast('⚠️ Please Sign In / Sign Up first',true);return false;}
+ return true;
+}
+function enrollNow(){buyMaster();}
+function buyMaster(){if(!requireAuth())return;openPayment('course','master');}
+function openPayment(type,id){
+ var it=null;for(var i=0;i<ALL_ITEMS.length;i++)if(ALL_ITEMS[i].id===id)it=ALL_ITEMS[i];
+ if(!it)return;
+ if(!requireAuth())return;
+ activeItem=it;
+ var modal=document.getElementById('paymentModal');
+ var st=document.getElementById('paymentStatus');
+ if(st){st.style.display='none';st.className='payment-status';st.textContent='';}
+ document.getElementById('paymentItem').textContent='📦 '+it.name;
+ var sp=document.getElementById('summaryPrice'),stotal=document.getElementById('summaryTotal');
+ if(sp)sp.textContent='₹'+it.price; if(stotal)stotal.textContent='₹'+it.price;
+ var terms=document.getElementById('checkoutTerms'); if(terms)terms.checked=false;
+ initCheckoutCountry();
+ document.getElementById('payBtn').disabled=false;
+ modal.classList.add('active');
+}
+function closeModal(id){var m=document.getElementById(id);if(m)m.classList.remove('active');}
+/* ================= AUTH / CHECKOUT / PROFILE EXTRAS ================= */
+function startOAuth(provider){
+  /* OAuth is handled by the site's server. The browser/provider chooses an already
+     signed-in account when supported; this page never reads browser passwords/cookies. */
+  var names={google:'Google',apple:'Apple',github:'GitHub'};
+  var label=names[provider]||provider;
+  var configured=(window.OAUTH_SERVER_URL||'').trim();
+  var target=(configured||'/auth/')+encodeURIComponent(provider);
+  var returnTo=location.href;
+  if(!configured && location.protocol==='file:'){
+    showToast('Open the website through its server to use '+label+' Sign In.',true);
+    return;
+  }
+  window.location.href=target+'?returnTo='+encodeURIComponent(returnTo);
+}
+function openCourseCatalog(){
+ var url=COURSE_CATALOG_URL||'/courses.html';
+ if(url.indexOf('{course}')>=0 && activeItem)url=url.replace('{course}',encodeURIComponent(activeItem.id));
+ window.open(url,'_blank','noopener');
+}
+function startExternalCheckout(){
+ if(!activeItem){showToast('⚠️ Select a course first.',true);return;}
+ var country=document.getElementById('checkoutCountry');
+ if(country && !country.value){showToast('⚠️ Please select your country.',true);return;}
+ var terms=document.getElementById('checkoutTerms');
+ if(terms && !terms.checked){showToast('⚠️ Please agree to the Terms of Use.',true);return;}
+ if(!PAYMENT_URL || PAYMENT_URL.indexOf('YOUR-')!==-1){
+  showToast('⚠️ Configure PAYMENT_URL in the site settings first.',true);return;
+ }
+ var success=PAYMENT_SUCCESS_URL.replace('{course}',encodeURIComponent(activeItem.id));
+ var url=PAYMENT_URL+(PAYMENT_URL.indexOf('?')>=0?'&':'?')+
+  'course='+encodeURIComponent(activeItem.id)+
+  '&price='+encodeURIComponent(activeItem.price)+
+  '&return_url='+encodeURIComponent(new URL(success,location.origin).href);
+ var st=document.getElementById('paymentStatus');
+ if(st){st.style.display='block';st.className='payment-status processing';st.textContent='⏳ Redirecting to secure payment…';}
+ window.location.href=url;
+}
+function handlePaymentReturn(){
+ var q=new URLSearchParams(location.search);
+ if(q.get('payment')!=='success')return;
+ var id=q.get('course')||'master';
+ // Do not trust this query string for granting paid access. A production server must verify the payment webhook.
+ showToast('✅ Payment return received. Access is shown after server-side payment verification.');
+ history.replaceState({},document.title,location.pathname);
+}
+function toggleProfileFullscreen(){
+ var m=document.getElementById('profileModal');
+ m.classList.toggle('profile-fullscreen');
+ var b=m.querySelector('.modal-title .icon-btn');
+ if(b)b.textContent=m.classList.contains('profile-fullscreen')?'⛶ Exit Full Screen':'⛶ Full Screen';
+}
+function openPasswordChange(){
+ if(!currentUser()){openAuth();return;}
+ var u=currentUser();
+ ['oldPassword','newPassword','confirmPassword'].forEach(function(id){document.getElementById(id).value='';});
+ var oldWrap=document.getElementById('passwordOldWrap');
+ var title=document.getElementById('passwordModalTitle');
+ if(!u.passwordHash){oldWrap.style.display='none';title.textContent='🔐 Set Password';}
+ else{oldWrap.style.display='block';title.textContent='🔑 Change Password';}
+ updatePasswordStrength();
+ document.getElementById('passwordModal').classList.add('active');
+}
+function passwordIsStrong(p){return typeof p==='string' && p.length>=10 && /[A-Z]/.test(p) && /[a-z]/.test(p) && /\d/.test(p) && /[^A-Za-z0-9]/.test(p);}
+function passwordRulesHTML(p){
+ var rules=[[p.length>=10,'At least 10 characters'],[/[A-Z]/.test(p),'One uppercase letter'],[/[a-z]/.test(p),'One lowercase letter'],[/\d/.test(p),'One number'],[/[^A-Za-z0-9]/.test(p),'One symbol']];
+ return rules.map(function(r){return '<div style="color:'+(r[0]?'var(--gold)':'var(--muted)')+'">'+(r[0]?'✓':'○')+' '+r[1]+'</div>';}).join('');
+}
+function updatePasswordStrength(){var p=document.getElementById('newPassword').value||'';document.getElementById('passwordRules').innerHTML=passwordRulesHTML(p);}
+function updateSignupPasswordStrength(){var p=document.getElementById('signupPassword').value||'';document.getElementById('signupPasswordRules').innerHTML=passwordRulesHTML(p).replace(/At least 10 characters/g,'10+ characters');}
+function changePassword(){
+ var u=currentUser();if(!u)return;
+ var old=document.getElementById('oldPassword').value;
+ var p=document.getElementById('newPassword').value;
+ var c=document.getElementById('confirmPassword').value;
+ if(u.passwordHash && !verifyStoredPassword(u,old)){showToast('❌ Current password is incorrect.',true);return;}
+ if(!passwordIsStrong(p)){showToast('⚠️ Password must have 10+ characters, uppercase, lowercase, number and symbol.',true);return;}
+ if(p!==c){showToast('⚠️ New passwords do not match.',true);return;}
+ u.passwordHash=hashPassword(p);saveUserObj(u);closeModal('passwordModal');showToast('✅ Password saved successfully.');
+}
+function hashPassword(p){var h=2166136261;for(var i=0;i<p.length;i++){h^=p.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);}
+function verifyStoredPassword(u,p){return !!u.passwordHash && u.passwordHash===hashPassword(p);}
+/* ================= VIDEO ================= */
+var ytPlayer=null,progressTimer=null,activeVideoCourseId=null;
+function loadYTAPI(){if(window.YT&&YT.Player)return;var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);}
+function onYouTubeIframeAPIReady(){}
+function buildPlayerVars(lang){return {autoplay:1,rel:0,cc_load_policy:1,cc_lang_pref:lang,hl:lang,modestbranding:1,iv_load_policy:3,playsinline:1};}
+function attachPlayerEvents(ev,key,isCourse,wst){
+ ev.onReady=function(e){
+  var saved=parseFloat(D.progress[key]||'0');
+  try{if(saved>5&&saved<(e.target.getDuration()*0.95))e.target.seekTo(saved,true);e.target.playVideo();}catch(err){}
+ };
+ ev.onStateChange=function(e){
+  if(e.data===1){
+   if(progressTimer)clearInterval(progressTimer);
+   progressTimer=setInterval(function(){try{var t=ytPlayer.getCurrentTime();if(t>5){D.progress[key]=t;saveData();}}catch(err){}},5000);
+  }else if(e.data===2){
+   try{var t2=ytPlayer.getCurrentTime();if(t2>5){D.progress[key]=t2;saveData();}}catch(err){}
+  }else if(e.data===0){
+   if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+   if(isCourse){markModuleCompleted(key);}
+   else{wst.className='watch-status done';wst.innerHTML='✅ Finished! Enjoy the series.';Sound.play('success');}
+  }
+ };
+ ev.onError=function(){showToast('⚠️ Video unavailable. Replace the demo YouTube ID with your video.',true);};
+}
+function watchModule(mid){
+ var m=null;for(var i=0;i<MASTER_COURSE.modules.length;i++)if(MASTER_COURSE.modules[i].id===mid)m=MASTER_COURSE.modules[i];
+ if(!m)return;
+ if(!isOwned('master')){showToast('⚠️ Buy the course first!',true);return;}
+ activeVideoCourseId=mid;
+ var holder=document.getElementById('videoIframe');
+ if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+ holder.innerHTML='';
+ document.getElementById('videoTitle').textContent='▶ '+m.name;
+ document.getElementById('videoModal').classList.add('active');
+ document.getElementById('subtitleLang').value=currentLang;
+ var wst=document.getElementById('watchStatus');
+ wst.className='watch-status';
+ wst.innerHTML='⏳ Watching… <a href="#" onclick="markModuleCompleted(\''+mid+'\');return false" style="color:var(--fg)">Mark complete</a>';
+ var events={};attachPlayerEvents(events,mid,true,wst);
+ ytPlayer=new YT.Player('videoIframe',{videoId:m.yt,playerVars:buildPlayerVars(currentLang),events:events});
+}
+function watchCourse(id){
+ var it=null;for(var i=0;i<ALL_ITEMS.length;i++)if(ALL_ITEMS[i].id===id)it=ALL_ITEMS[i];
+ if(!it)return;
+ if(!isOwned(id)){showToast('⚠️ Buy first!',true);return;}
+ if(id==='master'){watchModule(MASTER_COURSE.modules[0].id);return;}
+ activeVideoCourseId=id;
+ var holder=document.getElementById('videoIframe');
+ if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+ holder.innerHTML='';
+ document.getElementById('videoTitle').textContent='▶ '+it.name;
+ document.getElementById('videoModal').classList.add('active');
+ document.getElementById('subtitleLang').value=currentLang;
+ var wst=document.getElementById('watchStatus');
+ wst.className='watch-status';
+ wst.innerHTML='⏳ Watching… <a href="#" onclick="markModuleCompleted(\''+id+'\');return false" style="color:var(--fg)">Mark complete</a>';
+ var events={};attachPlayerEvents(events,id,false,wst);
+ ytPlayer=new YT.Player('videoIframe',{videoId:it.yt,playerVars:buildPlayerVars(currentLang),events:events});
+}
+function closeVideo(){
+ if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+ try{if(ytPlayer){var t=ytPlayer.getCurrentTime();if(t>5){D.progress[activeVideoCourseId]=t;saveData();}ytPlayer.pauseVideo();}}catch(e){}
+ document.getElementById('videoModal').classList.remove('active');
+}
+function updateSubtitles(){
+ var lang=document.getElementById('subtitleLang').value;
+ var key=activeVideoCourseId;
+ if(!ytPlayer||!key)return;
+ var pos=0;try{pos=ytPlayer.getCurrentTime()||0;}catch(e){}
+ var holder=document.getElementById('videoIframe');
+ try{ytPlayer.destroy();}catch(e){}
+ ytPlayer=null;holder.innerHTML='';
+ var v=null,isCourse=false;
+ for(var i=0;i<MASTER_COURSE.modules.length;i++)if(MASTER_COURSE.modules[i].id===key){v=MASTER_COURSE.modules[i];isCourse=true;}
+ if(!v){for(var j=0;j<ROBOT_SEASONS.length;j++)if(ROBOT_SEASONS[j].id===key)v=ROBOT_SEASONS[j];}
+ if(!v)return;
+ var wst=document.getElementById('watchStatus');
+ var events={};attachPlayerEvents(events,key,isCourse,wst);
+ events.onReady=function(e){try{if(pos>5)e.target.seekTo(pos,true);e.target.playVideo();}catch(err){}};
+ ytPlayer=new YT.Player('videoIframe',{videoId:v.yt,playerVars:buildPlayerVars(lang),events:events});
+}
+/* ================= LANGUAGE ================= */
+var currentLang='en';
+function initLang(){
+ var sel=document.getElementById('subtitleLang');sel.innerHTML='';
+ for(var i=0;i<LANG_CODES.length;i++){
+  var o=document.createElement('option');o.value=LANG_CODES[i];o.textContent=LANG_MAP[LANG_CODES[i]];sel.appendChild(o);
+ }
+ var bl=(navigator.language||'en').substring(0,2);
+ applyLang(LANG_CODES.indexOf(bl)!==-1?bl:'en');
+}
+function applyLang(c){
+ currentLang=c;
+ var t=HERO_TEXTS[c]||HERO_TEXTS.en;
+ var h=document.getElementById('hero-title');if(h)h.innerHTML=t.t;
+ var d=document.getElementById('hero-desc');if(d)d.textContent=t.d;
+ document.documentElement.lang=c;
+ try{document.getElementById('subtitleLang').value=c;}catch(e){}
+}
+/* ================= CERTIFICATION ================= */
+function loadCert(){
+ var box=document.getElementById('certModules'),mods=MASTER_COURSE.modules;
+ var total=mods.length,comp=0;box.innerHTML='';
+ mods.forEach(function(m){
+  var done=!!D.completed[m.id],owned=isOwned('master');
+  var cls='cert-module',icon='○';
+  if(done){cls='cert-module completed';icon='✓';comp++;}
+  else if(owned){cls='cert-module available';icon='▶';}
+  var d=document.createElement('div');d.className=cls;
+  d.innerHTML='<span class="status-icon">'+icon+'</span><span>'+esc(m.name)+'</span>';
+  if(owned&&!done)d.onclick=function(){watchModule(m.id);};
+  box.appendChild(d);
+ });
+ var pct=Math.round(comp/total*100);
+ document.getElementById('certPercent').textContent=pct+'%';
+ document.getElementById('certFill').style.width=pct+'%';
+ var btn=document.getElementById('certBtn');
+ if(pct===100){btn.disabled=false;btn.textContent='🎓 Generate Certificate';btn.onclick=generateCertificate;}
+ else{btn.disabled=true;btn.textContent='Complete all modules ('+comp+'/'+total+')';btn.onclick=null;}
+ if(D.cert&&D.cert.id)renderCert(D.cert);
+}
+function markModuleCompleted(key){
+ var found=false;
+ for(var i=0;i<MASTER_COURSE.modules.length;i++)if(MASTER_COURSE.modules[i].id===key)found=true;
+ if(!found||!isOwned('master'))return false;
+ D.completed[key]=true;saveData();
+ var wst=document.getElementById('watchStatus');wst.className='watch-status done';wst.innerHTML='✓ Module completed!';
+ Sound.play('success');showToast('✓ Module completed! Progress updated.');loadCert();
+ return false;
+}
+function generateCertificate(){
+ var total=MASTER_COURSE.modules.length,comp=0;
+ for(var i=0;i<total;i++)if(D.completed[MASTER_COURSE.modules[i].id])comp++;
+ if(comp!==total){showToast('⚠️ Complete ALL modules first!',true);return;}
+ var u=currentUser();
+ var cert={name:u?u.name:'Student',id:'WD-'+Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase(),date:new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})};
+ D.cert=cert;saveData();renderCert(cert);
+ Sound.play('win');showToast('🎓 Certificate generated! Download as PDF.');
+ document.getElementById('certDisplay').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function renderCert(c){
+ document.getElementById('certName').textContent=c.name;
+ document.getElementById('certId').textContent=c.id;
+ document.getElementById('certBody').innerHTML='This certifies that <b>'+esc(c.name)+'</b> has successfully completed <b>ALL 12 modules</b> (20 topics + practical labs) of the WHITE DEVIL Cyber Security &amp; Ethical Hacking course with practical &amp; theoretical mastery.<br>📅 '+esc(c.date)+'<br>🔎 Verify ID: <b>'+esc(c.id)+'</b> — send to WhatsApp +977-9819470342 for employer verification.';
+ document.getElementById('certDisplay').classList.add('active');
+}
+function downloadCert(){window.print();}
+/* ================= PROFILE MODAL ================= */
+function openProfile(tab){
+ if(!currentUser()){openAuth();return;}
+ renderProfileModal(tab||'profile');
+ document.getElementById('profileModal').classList.add('active');
+}
+function renderProfileModal(tab){
+ var u=currentUser();if(!u)return;
+ var tabs=['profile','courses','account'],cur=tab||'profile';
+ var html='<div class="profile-banner" style="background-image:url(\''+(u.banner||'')+'\')">'
+  +'<button style="position:absolute;top:8px;right:8px;background:var(--fg);color:#000;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.75rem" onclick="document.getElementById(\'bannerFile\').click()">🖼 Banner</button>'
+  +'<input type="file" id="bannerFile" accept="image/*" style="display:none" onchange="uploadBanner(this)"></div>'
+  +'<div class="profile-avatar-wrap">'
+  +(u.avatar?'<img class="profile-avatar" src="'+u.avatar+'">':'<div class="profile-avatar" style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;background:var(--input-bg);color:var(--fg)">'+esc((u.name||'?').charAt(0).toUpperCase())+'</div>')
+  +'<button class="p-upload-btn" onclick="document.getElementById(\'avatarFile\').click()">📷</button>'
+  +'<input type="file" id="avatarFile" accept="image/*" style="display:none" onchange="uploadAvatar(this)"></div>'
+  +'<div style="margin-left:115px"><b style="font-size:1.1rem;color:var(--accent-text)">'+esc(u.name)+'</b><br><span style="font-size:.75rem;color:var(--muted)">'+esc(u.email)+(u.phone?' · '+esc(u.phone):'')+'</span></div>'
+  +'<div class="p-tabs">'
+  +tabs.map(function(t){return '<button class="p-tab'+(t===cur?' active':'')+'" onclick="renderProfileModal(\''+t+'\')">'+({profile:'👤 Profile',courses:'📚 My Courses',account:'⚙️ Manage'}[t])+'</button>';}).join('')
+  +'</div>';
+ html+=cur==='profile'?profilePanel(u):(cur==='courses'?coursesPanel(u):accountPanel(u));
+ document.getElementById('profileBody').innerHTML=html;
+}
+function profilePanel(u){
+ return '<p style="font-size:.78rem;color:var(--muted);margin-bottom:6px">Full name</p>'
+  +'<input class="f-input" id="editName" value="'+esc(u.name)+'">'
+  +'<p style="font-size:.78rem;color:var(--muted);margin-bottom:6px">Bio</p>'
+  +'<textarea class="f-input" id="editBio" style="min-height:80px;resize:vertical">'+esc(u.bio||'')+'</textarea>'
+  +'<p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">📷 Profile picture &amp; 🖼 background image — use the buttons on the photo above.</p>'
+  +'<button class="f-btn" onclick="saveProfile()">💾 Save Profile</button>';
+}
+function coursesPanel(u){
+ var html='';
+ if(isOwned('master'))html+='<div class="owned-card"><div><div class="nm">'+esc(MASTER_COURSE.name)+'</div><div class="st">'+Object.keys(D.completed).filter(function(k){return /^m\d+$/.test(k);}).length+' / 12 modules completed · ₹'+MASTER_COURSE.price+'</div></div><button class="cont-btn" onclick="continueItem(\'master\')">▶ Continue</button></div>';
+ var any=false;
+ ROBOT_SEASONS.forEach(function(s){
+  if(isOwned(s.id)){any=true;html+='<div class="owned-card"><div><div class="nm">'+esc(s.name)+' — '+esc(s.label)+'</div><div class="st">₹'+s.price+' · purchased</div></div><button class="cont-btn" onclick="continueItem(\''+s.id+'\')">▶ Watch</button></div>';}
+ });
+ if(!isOwned('master')&&!any)html+='<p style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">You have not purchased any course yet.<br>Enroll now — full course <b>₹199</b> → Training section.</p>';
+ return html;
+}
+function continueItem(id){closeModal('profileModal');if(id==='master')watchModule(MASTER_COURSE.modules[0].id);else watchCourse(id);}
+function accountPanel(u){
+ var snd=lsGet('wd_sound','1')==='1',thm=lsGet('wd_theme','system');
+ return '<div class="set-row"><div><div class="lbl">🔊 Sound effects</div><div class="sub">Clicks, notifications &amp; success sounds</div></div><div class="switch'+(snd?' on':'')+'" onclick="toggleSoundRow(this)"></div></div>'
+  +'<div class="set-row"><div><div class="lbl">🎨 Theme</div><div class="sub">Black / White / System default</div></div><select class="f-input" style="width:130px;margin:0" onchange="setTheme(this.value)"><option value="dark"'+(thm==='dark'?' selected':'')+'>🌙 Black</option><option value="light"'+(thm==='light'?' selected':'')+'>☀️ White</option><option value="system"'+(thm==='system'?' selected':'')+'>🖥️ System</option></select></div>'
+  +'<div class="set-row"><div><div class="lbl">🔐 Two-Factor Authentication (2FA)</div><div class="sub">'+(u.twoFA?'✅ Enabled — extra security ON':'❌ Disabled')+'</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px" onclick="toggle2FA()">'+(u.twoFA?'Disable':'Enable')+'</button></div>'
+  +'<div class="set-row"><div><div class="lbl">🔑 '+(u.passwordHash?'Change password':'Set password')+'</div><div class="sub">10+ chars, uppercase, lowercase, number and symbol</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px" onclick="openPasswordChange()">'+(u.passwordHash?'Change':'Set')+'</button></div>'
+  +'<div class="set-row"><div><div class="lbl">✉️ Change email / phone</div><div class="sub">Verify the new contact with OTP</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px" onclick="changeEmail()">Change</button></div>'
+  +'<div class="set-row"><div><div class="lbl">📥 Export my data</div><div class="sub">Download a JSON backup of account &amp; progress</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px" onclick="exportData()">Export</button></div>'
+  +'<div class="set-row"><div><div class="lbl">🚪 Sign out</div><div class="sub">Your data stays saved in your account</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px" onclick="logoutUser()">Sign Out</button></div>'
+  +'<div class="set-row"><div><div class="lbl" style="color:var(--danger)">🗑️ Delete account</div><div class="sub">Permanent — all data lost</div></div><button class="f-btn ghost" style="width:auto;padding:8px 14px;border-color:var(--danger);color:var(--danger)" onclick="deleteAccount()">Delete</button></div>';
+}
+function toggleSoundRow(el){el.classList.toggle('on');Sound.toggle();}
+function saveProfile(){
+ var u=currentUser();if(!u)return;
+ u.name=sanitize(document.getElementById('editName').value.trim())||u.name;
+ u.bio=sanitize(document.getElementById('editBio').value.trim());
+ saveUserObj(u);updateAuthUI();showToast('✅ Profile saved!');Sound.play('success');
+}
+function uploadAvatar(inp){
+ var f=inp.files&&inp.files[0];if(!f)return;
+ if(f.size>2*1024*1024){showToast('⚠️ Image must be under 2MB',true);return;}
+ var r=new FileReader();r.onload=function(){var u=currentUser();if(!u)return;u.avatar=r.result;saveUserObj(u);renderProfileModal('profile');showToast('✅ Profile picture updated!');Sound.play('success');};
+ r.readAsDataURL(f);
+}
+function uploadBanner(inp){
+ var f=inp.files&&inp.files[0];if(!f)return;
+ if(f.size>2*1024*1024){showToast('⚠️ Image must be under 2MB',true);return;}
+ var r=new FileReader();r.onload=function(){var u=currentUser();if(!u)return;u.banner=r.result;saveUserObj(u);renderProfileModal('profile');showToast('✅ Background image updated!');Sound.play('success');};
+ r.readAsDataURL(f);
+}
+/* ================= CONTACT US ================= */
+function submitContactForm(e){
+ e.preventDefault();
+ var name=sanitize(document.getElementById('contactName').value.trim());
+ var email=sanitize(document.getElementById('contactEmail').value.trim());
+ var phone=sanitize(document.getElementById('contactPhone').value.trim());
+ var topic=sanitize(document.getElementById('contactTopic').value);
+ var msg=sanitize(document.getElementById('contactMessage').value.trim());
+ if(!name||!email||!msg){showToast('⚠️ Please fill all required fields.',true);return;}
+ var text='Hello WHITE DEVIL, I want to contact you.\n\nName: '+name+'\nEmail: '+email+'\nPhone/WhatsApp: '+(phone||'Not provided')+'\nTopic: '+topic+'\n\nMessage: '+msg;
+ window.open('https://wa.me/9779819470342?text='+encodeURIComponent(text),'_blank','noopener');
+ showToast('✅ Opening WhatsApp...');
+}
+
+/* ================= FEEDBACK ================= */
+var fbRating=0;
+function openFeedbackModal(){
+ if(!currentUser()){openAuth();return;}
+ document.getElementById('feedback').scrollIntoView({behavior:'smooth'});
+ document.getElementById('fbMsg').focus();
+}
+document.querySelectorAll('#fbStars span').forEach(function(s){
+ s.onclick=function(){
+  fbRating=parseInt(s.dataset.v,10);
+  document.querySelectorAll('#fbStars span').forEach(function(x){x.classList.toggle('on',parseInt(x.dataset.v,10)<=fbRating);});
+  Sound.play('click');
+ };
+});
+function submitFeedback(){
+ if(fbRating===0){showToast('⚠️ Please select a star rating (1–5)',true);return;}
+ var msg=sanitize(document.getElementById('fbMsg').value.trim());
+ if(msg.length<3){showToast('⚠️ Please write your feedback',true);return;}
+ var cat=document.getElementById('fbCat').value;
+ var u=currentUser(),fb=[];try{fb=JSON.parse(lsGet('wd_feedback','[]'));}catch(e){}
+ fb.push({name:u?u.name:'Anonymous',email:u?u.email:'',rating:fbRating,cat:cat,msg:msg,time:Date.now()});
+ lsSet('wd_feedback',JSON.stringify(fb));
+ showToast('🙏 Thank you! Feedback submitted — '+fbRating+'★');
+ Sound.play('success');
+ fbRating=0;
+ document.querySelectorAll('#fbStars span').forEach(function(s){s.classList.remove('on');});
+ document.getElementById('fbMsg').value='';
+}
+/* ================= CHATBOT ================= */
+var BOT_I18N={
+ greeting:{en:'👋 Namaste! Welcome to WHITE DEVIL. How can I help you?',hi:'👋 नमस्ते! WHITE DEVIL में आपका स्वागत है।',ne:'👋 नमस्ते! WHITE DEVIL मा स्वागत छ।'},
+ default:{en:'🤖 I can help with course modules, enrollment, practice platforms, certificates, account settings and cybersecurity learning.',hi:'🤖 मैं कोर्स, एनरोलमेंट, प्रैक्टिस प्लेटफॉर्म, सर्टिफिकेट और अकाउंट सेटिंग्स में मदद कर सकता हूँ।',ne:'🤖 म कोर्स, अभ्यास प्लेटफर्म, प्रमाणपत्र र अकाउन्ट सेटिङमा मद्दत गर्न सक्छु।'}
+};
+function detectBotLang(t){
+ if(/[\u0900-\u097F]/.test(t))return /छ|हो|गर्न|सक्छ|नेपाली|कोर्स/.test(t)?'ne':'hi';
+ if(/[\u4E00-\u9FFF]/.test(t))return 'zh';
+ if(/[\u0600-\u06FF]/.test(t))return 'ar';
+ if(/[\u0400-\u04FF]/.test(t))return 'ru';
+ if(/[\u0980-\u09FF]/.test(t))return 'bn';
+ return 'en';
+}
+function botFallback(lang,msg){
+ var l=String(msg).toLowerCase();
+ if(/price|cost|fee|₹|कीमत|दाम|मूल्य/.test(l))
+   return lang==='hi'?'💰 Full course ₹199. Payment checkout is handled by the configured payment provider.':'💰 Full course ₹199. Use the secure checkout button to enroll.';
+ if(/practice|lab|ctf|tryhackme|portswigger|hack the box|overthewire/.test(l))
+   return lang==='hi'?'🧪 Practice section में TryHackMe, PortSwigger Academy, OverTheWire और Hack The Box के legal practice links हैं।':'🧪 Open the Practice section for recommended legal training platforms.';
+ if(/certificate|cert|सर्टिफिकेट|प्रमाणपत्र/.test(l))
+   return lang==='hi'?'🎓 सभी 12 modules पूरा करने पर course completion certificate generate किया जा सकता है।':'🎓 Complete all 12 modules to generate the course completion certificate.';
+ if(/password|पासवर्ड/.test(l))
+   return lang==='hi'?'🔑 Profile → Manage Account → Change Password. Strong password में 10+ characters, uppercase, lowercase, number और symbol रखें।':'🔑 Profile → Manage Account → Change Password. Use 10+ chars with uppercase, lowercase, number and symbol.';
+ if(/login|google|apple|github|oauth/.test(l))
+   return lang==='hi'?'🔐 Google, Apple और GitHub buttons secure OAuth sign-in खोलते हैं। अगर आपका provider browser में signed in है, provider account chooser उसे दिखा सकता है।':'🔐 Google, Apple and GitHub use secure OAuth; the provider handles account selection.';
+ return (BOT_I18N[lang]||BOT_I18N.en).default;
+}
+async function askChatAPI(msg,lang){
+ try{
+   var res=await fetch(CHAT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({message:msg,language:lang,course:'Cyber Security & Ethical Hacking Master Course'})});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   var data=await res.json();
+   return data.reply||data.output_text||data.message||null;
+ }catch(e){return null;}
+}
+function appendChatMessage(box,who,text){box.innerHTML+='<div class="msg '+who+'">'+esc(text)+'</div>';box.scrollTop=box.scrollHeight;}
+async function answerChat(msg){var lang=detectBotLang(msg);var api=await askChatAPI(msg,lang);return api||botFallback(lang,msg);}
+function toggleChat(){document.getElementById('chatPanel').classList.toggle('active');}
+function toggleChatFullscreen(){var p=document.getElementById('chatPanel');p.classList.toggle('chat-fullscreen');var b=p.querySelector('.chat-full');if(b)b.textContent=p.classList.contains('chat-fullscreen')?'⛶':'⛶';}
+function setChatTyping(on){var t=document.getElementById('chatTyping');if(t)t.classList.toggle('active',!!on);}
+
+async function sendInlineChat(){var inp=document.getElementById('chatInputInline'),msg=inp.value.trim();if(!msg)return;inp.value='';var box=document.getElementById('chatMsgsInline');appendChatMessage(box,'user',msg);var reply=await answerChat(msg);appendChatMessage(box,'bot',reply);}
+async function sendChat(){
+ var inp=document.getElementById('chatInput'),msg=inp.value.trim();if(!msg)return;
+ inp.value='';
+ var msgs=document.getElementById('chatMsgs');
+ msgs.innerHTML+='<div class="msg user">'+esc(msg)+'</div>';
+ msgs.scrollTop=msgs.scrollHeight;
+ var lang=detectBotLang(msg);
+ setChatTyping(true);
+ var reply=await answerChat(msg);
+ setChatTyping(false);
+ appendChatMessage(msgs,'bot',reply);
+ msgs.scrollTop=msgs.scrollHeight;
+}
+/* ================= NAV / INIT ================= */
+function go(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});document.getElementById('navLinks').classList.remove('open');}
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+function init(){
+ Sound.load();
+ applyTheme();
+ initLang();
+ initCC();initCheckoutCountry();
+ updateAuthUI();
+ renderAll();
+ loadYTAPI();
+ handlePaymentReturn();
+ restoreOAuthSession();
+}
+window.addEventListener('error',function(e){e.preventDefault();});
+document.addEventListener('keydown',function(e){
+ if(e.key==='Escape'){
+  ['authModal','otpModal','socialModal','paymentModal','videoModal','profileModal','passwordModal'].forEach(function(id){var m=document.getElementById(id);if(m)m.classList.remove('active');});
+  document.getElementById('chatPanel').classList.remove('active','chat-fullscreen');
+ }
+});
+document.addEventListener('contextmenu',function(e){if(e.target.closest('.video-wrapper'))e.preventDefault();});
+document.addEventListener('click',function(e){
+ if(e.target.classList.contains('modal-overlay')){e.target.classList.remove('active');closeVideo();}
+});
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){init();runSplash();});}
+else{init();runSplash();}
+</script>
+<style>
+.payment-status.success{color:#00ff41!important;background:rgba(0,255,65,.08);border:1px solid #00ff41}
+.payment-status.error{color:#ff4444!important;background:rgba(255,68,68,.08);border:1px solid #ff4444}
+.payment-status.processing{color:#ffaa00!important;background:rgba(255,170,0,.08);border:1px solid #ffaa00}
+@media print{body *{visibility:hidden}#certDisplay,#certDisplay *{visibility:visible}#certDisplay{position:fixed;top:0;left:0;width:100%;margin:0;background:#0a1f0a}}
+</style>
+</body>
+</html>
