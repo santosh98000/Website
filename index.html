@@ -204,9 +204,17 @@ html[data-theme="light"] .social-btn .gh{color:#24292f}
 /* OTP */
 .otp-code-box{margin:14px 0;padding:16px;border:1px dashed var(--gold);border-radius:10px;text-align:center;color:var(--gold);font-size:1.5rem;font-weight:900;letter-spacing:6px;background:var(--input-bg)}
 /* PROFILE */
-.profile-banner{width:100%;height:150px;border-radius:12px;background-size:cover;background-position:center;border:1px solid var(--border);position:relative;margin-bottom:45px;background-color:var(--input-bg)}
-.profile-avatar-wrap{position:absolute;bottom:-47px;left:50%;transform:translateX(-50%);width:94px;height:94px;padding:5px;border-radius:50%;background:var(--card-bg);border:2px solid var(--fg);box-shadow:0 0 22px var(--glow);z-index:3}
-.profile-avatar{width:80px;height:80px;border-radius:50%;border:3px solid var(--fg);object-fit:cover;background:var(--input-bg);box-shadow:0 0 15px var(--glow)}
+.profile-banner{width:100%;height:170px;border-radius:12px;background-size:cover;background-position:center;border:1px solid var(--border);position:relative;margin-bottom:78px;background-color:var(--input-bg)}
+.profile-avatar-wrap{position:absolute;bottom:-78px;left:0;transform:none;width:156px;height:156px;padding:4px;border-radius:50%;background:var(--card-bg);border:2px solid var(--fg);box-shadow:0 0 22px var(--glow);z-index:3}
+.profile-avatar{width:148px;height:148px;border-radius:50%;border:3px solid var(--fg);object-fit:cover;background:var(--input-bg);box-shadow:0 0 15px var(--glow)}
+.profile-header-info{margin:-62px 0 18px 180px;min-height:92px;text-align:left}
+.profile-header-info .profile-name{font-size:1.55rem;font-weight:800;color:var(--text);line-height:1.15}
+.profile-header-info .profile-handle{font-size:.82rem;color:var(--muted);margin-top:7px}
+.profile-header-info .profile-bio{font-size:.86rem;color:var(--muted);margin-top:10px;line-height:1.45;max-width:720px}
+.profile-about{margin:18px 0 8px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg);box-shadow:0 0 18px rgba(0,0,0,.18)}
+.profile-about h3{margin:0 0 7px;color:var(--accent-text);font-size:1.05rem}.profile-about p{margin:0;color:var(--muted);line-height:1.6;font-size:.86rem}
+.profile-socials{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.profile-socials a{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid var(--border);border-radius:999px;color:var(--text);text-decoration:none;background:var(--input-bg);font-size:.78rem;font-weight:700;transition:.2s}.profile-socials a:hover{border-color:var(--fg);box-shadow:0 0 14px var(--glow);transform:translateY(-1px)}
+
 .p-upload-btn{position:absolute;bottom:0;right:0;background:var(--fg);color:#000;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:.8rem;line-height:1}
 .p-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
 .p-tab{flex:1;min-width:110px;text-align:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--muted);font-size:.8rem;font-weight:700;font-family:inherit;background:none;transition:.3s}
@@ -228,8 +236,9 @@ html[data-theme="light"] .social-btn .gh{color:#24292f}
 #profileModal.profile-fullscreen{padding:0}
 #profileModal.profile-fullscreen .modal-box{max-width:none;width:100vw;height:100vh;max-height:100vh;border-radius:0;padding:35px;overflow-y:auto}
 #profileModal.profile-fullscreen .profile-banner{height:260px}
-#profileModal.profile-fullscreen .profile-avatar-wrap{width:140px;height:140px;bottom:-70px;left:50%;transform:translateX(-50%)}
-#profileModal.profile-fullscreen .profile-avatar{width:124px;height:124px}
+#profileModal.profile-fullscreen .profile-avatar-wrap{width:170px;height:170px;bottom:-85px;left:40px;transform:none}
+#profileModal.profile-fullscreen .profile-avatar{width:162px;height:162px}
+#profileModal.profile-fullscreen .profile-header-info{margin:-70px 0 24px 235px}
 /* VIDEO */
 .video-box{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:900px;width:100%;padding:16px}
 .video-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
@@ -888,6 +897,7 @@ var HERO_TEXTS={
  zh:{t:'学习网络安全与道德黑客课程 — 主题',d:'12个模块 · 20个主题 · 实践实验室 · 真实项目 · 就业技能 · 证书。由Santosh Chhetri为WHITE DEVIL设计。'}
 };
 /* ================= STORAGE / STATE ================= */
+var DEFAULT_PROFILE_IMAGE='assets/profile-youtube-exact.png';
 function lsGet(k,d){try{var v=localStorage.getItem(k);return v===null?d:v;}catch(e){return d;}}
 function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var D={purchased:[],completed:{},progress:{},cert:null};
@@ -1131,7 +1141,7 @@ function updateAuthUI(){
  var area=document.getElementById('authArea');
  var u=currentUser();
  if(u){
-  var av=u.avatar?'<img class="user-avatar" src="'+u.avatar+'" alt="avatar">':'<div class="user-avatar" style="display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900">'+esc((u.name||'?').charAt(0).toUpperCase())+'</div>';
+  var av='<img class="user-avatar" src="'+(u.avatar||DEFAULT_PROFILE_IMAGE)+'" alt="avatar">';
   area.innerHTML='<div class="user-chip" onclick="event.stopPropagation();document.getElementById(\'userDD\').classList.toggle(\'open\')">'+av+'<span>'+esc(u.name.split(' ')[0])+'</span>'
    +'<div class="dd" id="userDD">'
    +'<a onclick="openProfile(\'profile\')">👤 My Profile</a>'
@@ -1470,24 +1480,45 @@ function renderProfileModal(tab){
   +'<button style="position:absolute;top:8px;right:8px;background:var(--fg);color:#000;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.75rem" onclick="document.getElementById(\'bannerFile\').click()">🖼 Banner</button>'
   +'<input type="file" id="bannerFile" accept="image/*" style="display:none" onchange="uploadBanner(this)"></div>'
   +'<div class="profile-avatar-wrap">'
-  +(u.avatar?'<img class="profile-avatar" src="'+u.avatar+'">':'<div class="profile-avatar" style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;background:var(--input-bg);color:var(--fg)">'+esc((u.name||'?').charAt(0).toUpperCase())+'</div>')
+  +(u.avatar?'<img class="profile-avatar" src="'+u.avatar+'">':'<img class="profile-avatar" src="'+DEFAULT_PROFILE_IMAGE+'" alt="Santosh Chhetri profile">')
   +'<button class="p-upload-btn" onclick="document.getElementById(\'avatarFile\').click()">📷</button>'
   +'<input type="file" id="avatarFile" accept="image/*" style="display:none" onchange="uploadAvatar(this)"></div>'
-  +'<div style="margin-left:115px"><b style="font-size:1.1rem;color:var(--accent-text)">'+esc(u.name)+'</b><br><span style="font-size:.75rem;color:var(--muted)">'+esc(u.email)+(u.phone?' · '+esc(u.phone):'')+'</span></div>'
+  +'<div class="profile-header-info">'
+  +'<div class="profile-name">'+esc(u.name||'Master In White Devil')+'</div>'
+  +'<div class="profile-handle">@mastersinwhitedevil · Master In White Devil</div>'
+  +'<div class="profile-bio">'+esc(u.bio||"I’m Santosh Chhetri, creator of Master In White Devil, sharing ethical hacking, cybersecurity and IT learning content.")+'</div>'
+  +'</div>'
   +'<div class="p-tabs">'
   +tabs.map(function(t){return '<button class="p-tab'+(t===cur?' active':'')+'" onclick="renderProfileModal(\''+t+'\')">'+({profile:'👤 Profile',courses:'📚 My Courses',account:'⚙️ Manage'}[t])+'</button>';}).join('')
   +'</div>';
  html+=cur==='profile'?profilePanel(u):(cur==='courses'?coursesPanel(u):accountPanel(u));
  document.getElementById('profileBody').innerHTML=html;
 }
+var PROFILE_SOCIALS={
+ facebook:'', instagram:'', youtube:'https://youtube.com/@mastersinwhitedevil', twitter:'', linkedin:'', whatsapp:'https://wa.me/9779819470342'
+};
+function socialLink(url,label,icon){return url?'<a href="'+url+'" target="_blank" rel="noopener noreferrer" aria-label="'+label+'">'+icon+' '+label+'</a>':'';}
 function profilePanel(u){
- return '<p style="font-size:.78rem;color:var(--muted);margin-bottom:6px">Full name</p>'
+ var bio=u.bio||"I'm Santosh Chhetri, creator of Master in White Devil, sharing practical ethical hacking, cybersecurity and IT learning content.";
+ return '<div class="profile-about">'
+  +'<h3>Master In White Devil</h3>'
+  +'<p>'+esc(bio)+'</p>'
+  +'<div class="profile-socials">'
+  +socialLink(PROFILE_SOCIALS.facebook,'Facebook','f')
+  +socialLink(PROFILE_SOCIALS.instagram,'Instagram','◎')
+  +socialLink(PROFILE_SOCIALS.youtube,'YouTube','▶')
+  +socialLink(PROFILE_SOCIALS.twitter,'Twitter / X','𝕏')
+  +socialLink(PROFILE_SOCIALS.linkedin,'LinkedIn','in')
+  +socialLink(PROFILE_SOCIALS.whatsapp,'WhatsApp','◉')
+  +'</div></div>'
+  +'<p style="font-size:.78rem;color:var(--muted);margin-bottom:6px">Full name</p>'
   +'<input class="f-input" id="editName" value="'+esc(u.name)+'">'
   +'<p style="font-size:.78rem;color:var(--muted);margin-bottom:6px">Bio</p>'
-  +'<textarea class="f-input" id="editBio" style="min-height:80px;resize:vertical">'+esc(u.bio||'')+'</textarea>'
+  +'<textarea class="f-input" id="editBio" style="min-height:80px;resize:vertical">'+esc(u.bio||bio)+'</textarea>'
   +'<p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">📷 Profile picture &amp; 🖼 background image — use the buttons on the photo above.</p>'
   +'<button class="f-btn" onclick="saveProfile()">💾 Save Profile</button>';
 }
+
 function coursesPanel(u){
  var html='';
  if(isOwned('master'))html+='<div class="owned-card"><div><div class="nm">'+esc(MASTER_COURSE.name)+'</div><div class="st">'+Object.keys(D.completed).filter(function(k){return /^m\d+$/.test(k);}).length+' / 12 modules completed · ₹'+MASTER_COURSE.price+'</div></div><button class="cont-btn" onclick="continueItem(\'master\')">▶ Continue</button></div>';
